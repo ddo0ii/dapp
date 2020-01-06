@@ -132,7 +132,7 @@
                                                                     methods: {
                                                                         jeungTest() {
                                                                             axios
-                                                                                .post("https://www.ddhouse.co.kr/api/v1/private/calculator/tax-gift", {
+                                                                                .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-gift", {
                                                                                     registration: this.registration,
                                                                                     asset_type: this.asset_type,
                                                                                     house_count: this.house_count,
