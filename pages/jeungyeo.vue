@@ -61,31 +61,11 @@
                                                                                     color="blue"
                                                                                     group="group"
                                                                                     style="flex-wrap: wrap; width: 100%">
-                                                                                    <v-btn
-                                                                                        class="caption"
-                                                                                        value="couple"
-                                                                                        height="40px"
-                                                                                        style="width: 45%">배우자</v-btn>
-                                                                                    <v-btn
-                                                                                        class="caption"
-                                                                                        value="parent"
-                                                                                        height="40px"
-                                                                                        style="width: 45%">직계존속</v-btn>
-                                                                                    <v-btn
-                                                                                        class="caption"
-                                                                                        value="child"
-                                                                                        height="40px"
-                                                                                        style="width: 30%">직계비속</v-btn>
-                                                                                    <v-btn
-                                                                                        class="caption"
-                                                                                        value="family"
-                                                                                        height="40px"
-                                                                                        style="width: 30%">기타친족</v-btn>
-                                                                                    <v-btn
-                                                                                        class="caption"
-                                                                                        value="other"
-                                                                                        height="40px"
-                                                                                        style="width: 30%">타인</v-btn>
+                                                                                    <v-btn class="caption" value="couple" height="40px" style="width: 45%">배우자</v-btn>
+                                                                                    <v-btn class="caption" value="parent" height="40px" style="width: 45%">직계존속</v-btn>
+                                                                                    <v-btn class="caption" value="child" height="40px" style="width: 30%">직계비속</v-btn>
+                                                                                    <v-btn class="caption" value="family" height="40px" style="width: 30%">기타친족</v-btn>
+                                                                                    <v-btn class="caption" value="other" height="40px" style="width: 30%">타인</v-btn>
                                                                                 </v-btn-toggle>
                                                                             </v-list-item-content>
                                                                         </v-list-item>
@@ -99,16 +79,8 @@
                                                                                         color="blue"
                                                                                         group="group"
                                                                                         style="flex-wrap: wrap; width: 100%">
-                                                                                        <v-btn
-                                                                                            class="caption"
-                                                                                            value="adult"
-                                                                                            height="40px"
-                                                                                            style="width: 45%">성년</v-btn>
-                                                                                        <v-btn
-                                                                                            class="caption"
-                                                                                            value="children"
-                                                                                            height="40px"
-                                                                                            style="width: 45%">미성년</v-btn>
+                                                                                        <v-btn class="caption" value="adult" height="40px" style="width: 45%">성년</v-btn>
+                                                                                        <v-btn class="caption" value="children" height="40px" style="width: 45%">미성년</v-btn>
                                                                                     </v-btn-toggle>
                                                                                 </v-list-item-content>
                                                                             </v-list-item>
@@ -123,16 +95,8 @@
                                                                                         color="blue"
                                                                                         group="group"
                                                                                         style="flex-wrap: wrap; width: 100%">
-                                                                                        <v-btn
-                                                                                            class="caption"
-                                                                                            value="exclude"
-                                                                                            height="40px"
-                                                                                            style="width: 45%">세대 생략인 경우</v-btn>
-                                                                                        <v-btn
-                                                                                            class="caption"
-                                                                                            value="include"
-                                                                                            height="40px"
-                                                                                            style="width: 45%">세대 생략이 아닌 경우</v-btn>
+                                                                                        <v-btn class="caption" value="exclude" height="40px" style="width: 45%">세대 생략인 경우</v-btn>
+                                                                                        <v-btn class="caption" value="include" height="40px" style="width: 45%">세대 생략이 아닌 경우</v-btn>
                                                                                     </v-btn-toggle>
                                                                                 </v-list-item-content>
                                                                             </v-list-item>
@@ -147,7 +111,7 @@
                                                                                     <v-text-field class="caption" v-model="price" placeholder="증여금액 입력" suffix="만원"></v-text-field>
                                                                                 </v-col>
 
-                                                                                <div class="being">
+                                                                                <div class="being" @click="jeungTest">
                                                                                     <v-btn max-width="80%" min-width="80%" color="#2D9527" dark="dark">계산하기</v-btn>
                                                                                 </div>
 
@@ -158,16 +122,33 @@
                                                                 </v-layout>
                                                             </template>
                                                             <script>
+
+                                                                import axios from "axios"
                                                                 export default {
                                                                     name: 'jeungyeo',
                                                                     data() {
-                                                                        return {
-                                                                            giver: 'couple',
-                                                                            receiver_age: 'adult',
-                                                                            receiver_relation: 'exclude',
-                                                                            dialog: false,
-                                                                            price: null,
-                                                                            }
+                                                                        return {giver: 'couple', receiver_age: 'adult', receiver_relation: 'exclude', dialog: false, price: null}
+                                                                    },
+                                                                    methods: {
+                                                                        jeungTest() {
+                                                                            axios
+                                                                                .post("https://www.ddhouse.co.kr/api/v1/private/calculator/tax-gift", {
+                                                                                    registration: this.registration,
+                                                                                    asset_type: this.asset_type,
+                                                                                    house_count: this.house_count,
+                                                                                    date_buy: this.date_buy,
+                                                                                    price_buy: this.price_buy,
+                                                                                    date_transfer: this.date_transfer,
+                                                                                    price_transfer: this.price_transfer,
+                                                                                    price_etc: this.price_etc
+                                                                                })
+                                                                                .then(res => {
+                                                                                    console.log(res);
+                                                                                })
+                                                                                .catch(err => {
+                                                                                    console.log(err);
+                                                                                });
+                                                                        }
                                                                     }
                                                                 }
                                                             </script>

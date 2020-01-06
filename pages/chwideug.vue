@@ -168,11 +168,12 @@
                                 name: 'chwideug',
                                 data() {
                                     return {
-                                        asset_type='house',
+                                        asset_type:'house',
                                         kind: 'meme',
                                         area: 'small',
                                         farm_type: 'new',
                                         dialog: false,
+                                        price: null,
                                     }
                                 }
                             }
