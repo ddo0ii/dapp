@@ -56,64 +56,57 @@
                                                                             <v-list-item-content>
                                                                                 <p class="font-weight-black">대상물 구분</p>
                                                                                 <v-btn-toggle
-                                                                                    v-model="text1"
+                                                                                    v-model="giver"
                                                                                     tile="tile"
                                                                                     color="blue"
                                                                                     group="group"
                                                                                     style="flex-wrap: wrap; width: 100%">
                                                                                     <v-btn
                                                                                         class="caption"
-                                                                                        giver="couple"
-                                                                                        value="a1"
+                                                                                        value="couple"
                                                                                         height="40px"
                                                                                         style="width: 45%">배우자</v-btn>
                                                                                     <v-btn
                                                                                         class="caption"
-                                                                                        giver="parent"
-                                                                                        value="a2"
+                                                                                        value="parent"
                                                                                         height="40px"
                                                                                         style="width: 45%">직계존속</v-btn>
                                                                                     <v-btn
                                                                                         class="caption"
-                                                                                        giver="child"
-                                                                                        value="a3"
+                                                                                        value="child"
                                                                                         height="40px"
                                                                                         style="width: 30%">직계비속</v-btn>
                                                                                     <v-btn
                                                                                         class="caption"
-                                                                                        giver="family"
-                                                                                        value="a4"
+                                                                                        value="family"
                                                                                         height="40px"
                                                                                         style="width: 30%">기타친족</v-btn>
                                                                                     <v-btn
                                                                                         class="caption"
-                                                                                        giver="other"
-                                                                                        value="a5"
+                                                                                        value="other"
                                                                                         height="40px"
                                                                                         style="width: 30%">타인</v-btn>
                                                                                 </v-btn-toggle>
                                                                             </v-list-item-content>
                                                                         </v-list-item>
-                                                                        <div v-if="text1=='a2'">
+                                                                        <div v-if="giver==='parent'">
                                                                             <v-list-item>
                                                                                 <v-list-item-content>
                                                                                     <p class="font-weight-black">수증자 연령 구분</p>
                                                                                     <v-btn-toggle
-                                                                                        v-model="text2"
+                                                                                        v-model="receiver_age"
                                                                                         tile="tile"
                                                                                         color="blue"
                                                                                         group="group"
                                                                                         style="flex-wrap: wrap; width: 100%">
                                                                                         <v-btn
                                                                                             class="caption"
-                                                                                            receiver_age="adult"
-                                                                                            value="b1"
+                                                                                            value="adult"
                                                                                             height="40px"
                                                                                             style="width: 45%">성년</v-btn>
                                                                                         <v-btn
                                                                                             class="caption"
-                                                                                            receiver_age="children"
-                                                                                            value="b2"
+                                                                                            value="children"
                                                                                             height="40px"
                                                                                             style="width: 45%">미성년</v-btn>
                                                                                     </v-btn-toggle>
@@ -125,21 +118,19 @@
                                                                                     <p class="font-weight-black">수증자 - 증여자 관계 구분</p>
 
                                                                                     <v-btn-toggle
-                                                                                        v-model="text3"
+                                                                                        v-model="receiver_relation"
                                                                                         tile="tile"
                                                                                         color="blue"
                                                                                         group="group"
                                                                                         style="flex-wrap: wrap; width: 100%">
                                                                                         <v-btn
                                                                                             class="caption"
-                                                                                            receiver_relation="exclude"
-                                                                                            value="c1"
+                                                                                            value="exclude"
                                                                                             height="40px"
                                                                                             style="width: 45%">세대 생략인 경우</v-btn>
                                                                                         <v-btn
                                                                                             class="caption"
-                                                                                            receiver_relation="include"
-                                                                                            value="c2"
+                                                                                            value="include"
                                                                                             height="40px"
                                                                                             style="width: 45%">세대 생략이 아닌 경우</v-btn>
                                                                                     </v-btn-toggle>
@@ -153,7 +144,7 @@
                                                                                     <v-subheader class="caption" color="blue darken-4">증여금액</v-subheader>
                                                                                 </v-col>
                                                                                 <v-col cols="7">
-                                                                                    <v-text-field class="caption" price="price" placeholder="증여금액 입력" suffix="만원"></v-text-field>
+                                                                                    <v-text-field class="caption" v-model="price" placeholder="증여금액 입력" suffix="만원"></v-text-field>
                                                                                 </v-col>
 
                                                                                 <div class="being">
@@ -171,15 +162,12 @@
                                                                     name: 'jeungyeo',
                                                                     data() {
                                                                         return {
-                                                                            text1: 'a1',
-                                                                            text2: 'b1',
-                                                                            text3: 'c1',
+                                                                            giver: 'couple',
+                                                                            receiver_age: 'adult',
+                                                                            receiver_relation: 'exclude',
                                                                             dialog: false,
-                                                                            giver: null,
                                                                             price: null,
-                                                                            receiver_relation: null,
-                                                                            receiver_age: null
-                                                                        }
+                                                                            }
                                                                     }
                                                                 }
                                                             </script>

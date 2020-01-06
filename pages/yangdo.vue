@@ -217,14 +217,9 @@
         },
         methods: {
             yangTest() {
-                let axiosConfig = {
-                    headers: {
-                        'Content-Type': 'application/json;charset=UTF-8',
-                    }
-                };
                 axios
-                    .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-transfer", axiosConfig, {
-                        registration: this.registration,
+                    .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-transfer", {
+                       registration: this.registration,
                         asset_type: this.asset_type,
                         house_count: this.house_count,
                         date_buy: this.date_buy,

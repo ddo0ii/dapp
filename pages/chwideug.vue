@@ -41,27 +41,24 @@
                                         <v-list-item-content>
                                             <p class="font-weight-black">대상물 구분</p>
                                             <v-btn-toggle
-                                                v-model="text1"
+                                                v-model="asset_type"
                                                 tile="tile"
                                                 color="blue"
                                                 group="group"
                                                 style="flex-wrap: wrap; width: 100%">
                                                 <v-btn
                                                     class="caption"
-                                                    asset_type="house"
-                                                    value="a1"
+                                                    value="house"
                                                     height="40px"
                                                     style="width: 45%">주택</v-btn>
                                                 <v-btn
                                                     class="caption"
-                                                    asset_type="land"
-                                                    value="a2"
+                                                    value="land"
                                                     height="40px"
                                                     style="width: 45%">농지</v-btn>
                                                 <v-btn
                                                     class="caption"
-                                                    asset_type="farm"
-                                                    value="a3"
+                                                    value="farm"
                                                     height="40px"
                                                     style="width: 90%">토지,건물,오피스텔</v-btn>
                                             </v-btn-toggle>
@@ -72,31 +69,28 @@
                                         <v-list-item-content>
                                             <p class="font-weight-black">취득 구분</p>
                                             <v-btn-toggle
-                                                v-model="text2"
+                                                v-model="kind"
                                                 tile="tile"
                                                 color="blue"
                                                 group="group"
                                                 style="flex-wrap: wrap; width: 100%">
                                                 <v-btn
                                                     class="caption"
-                                                    kind="meme"
-                                                    value="b1"
+                                                    value="meme"
                                                     height="40px"
                                                     style="width: 22.5%">매매</v-btn>
                                                 <v-btn
                                                     class="caption"
-                                                    kind="gift"
-                                                    value="b2"
+                                                    value="gift"
                                                     height="40px"
                                                     style="width: 22.5%">증여</v-btn>
                                                 <v-btn
                                                     class="caption"
-                                                    kind="inherit"
-                                                    value="b3"
+                                                    value="inherit"
                                                     height="40px"
                                                     style="width: 22.5%">상속</v-btn>
                                                 <v-btn
-                                                    v-if="(text1=='a1')||(text1=='a3')"
+                                                    v-if="(asset_type==='house')||(asset_type==='farm')"
                                                     class="caption"
                                                     kind="build"
                                                     value="b4"
@@ -106,29 +100,29 @@
                                         </v-list-item-content>
                                     </v-list-item>
 
-                                    <div v-if="(text1=='a1')&&(text2=='b1')">
+                                    <div v-if="(asset_type==='house')&&(kind==='meme')">
                                         <v-list-item>
                                             <v-list-item-content>
                                                 <p class="font-weight-black">면적</p>
 
                                                 <v-btn-toggle
-                                                    v-model="text3"
+                                                    v-model="area"
                                                     tile="tile"
                                                     color="blue"
                                                     group="group"
                                                     style="flex-wrap: wrap; width: 100%">
-                                                    <v-btn class="caption" area="small" value="c1" height="40px" style="width: 90%">85m^2 이하(읍, 면지역은 100m^2)</v-btn>
-                                                    <v-btn class="caption" area="large" value="c2" height="40px" style="width: 90%">85m^2 초과(읍, 면지역은 100m^2)</v-btn>
+                                                    <v-btn class="caption" value="small" height="40px" style="width: 90%">85m^2 이하(읍, 면지역은 100m^2)</v-btn>
+                                                    <v-btn class="caption" value="large" height="40px" style="width: 90%">85m^2 초과(읍, 면지역은 100m^2)</v-btn>
                                                 </v-btn-toggle>
                                             </v-list-item-content>
                                         </v-list-item>
                                     </div>
 
-                                    <div v-if="(text1=='a2')&&(text2=='b1')">
+                                    <div v-if="(asset_type==='land')&&(kind==='meme')">
                                         <v-list-item>
                                             <v-list-item-content>
                                                 <v-btn-toggle
-                                                    v-model="text4"
+                                                    v-model="farm_type"
                                                     tile="tile"
                                                     color="blue"
                                                     group="group"
@@ -136,13 +130,13 @@
                                                     <v-btn
                                                         class="caption"
                                                         farm_type="new"
-                                                        value="d1"
+                                                        value="new"
                                                         height="40px"
                                                         style="width: 45%">신규</v-btn>
                                                     <v-btn
                                                         class="caption"
                                                         farm_type="farming"
-                                                        value="d2"
+                                                        value="farming"
                                                         height="40px"
                                                         style="width: 45%">2년 이상 자경</v-btn>
                                                 </v-btn-toggle>
@@ -156,7 +150,7 @@
                                                 <v-subheader class="caption" color="blue darken-4">취득가액</v-subheader>
                                             </v-col>
                                             <v-col cols="7">
-                                                <v-text-field class="caption" price="price" placeholder="취득가액 입력" suffix="만원"></v-text-field>
+                                                <v-text-field class="caption" v-model="price" placeholder="취득가액 입력" suffix="만원"></v-text-field>
                                             </v-col>
 
                                             <div class="being">
@@ -174,16 +168,11 @@
                                 name: 'chwideug',
                                 data() {
                                     return {
-                                        text1: 'a1',
-                                        text2: 'b1',
-                                        text3: 'c1',
-                                        text4: 'd1',
+                                        asset_type='house',
+                                        kind: 'meme',
+                                        area: 'small',
+                                        farm_type: 'new',
                                         dialog: false,
-                                        asset_type: null,
-                                        kind: null,
-                                        area: null,
-                                        price: null,
-                                        farm_type: null
                                     }
                                 }
                             }

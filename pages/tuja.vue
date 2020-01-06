@@ -43,7 +43,7 @@
                     <v-col cols="7">
                         <v-text-field
                             class="caption"
-                            price_m="price_m"
+                            v-model="price_m"
                             placeholder="부동산을 매수할 금액"
                             suffix="만원"></v-text-field>
                     </v-col>
@@ -55,7 +55,7 @@
                     <v-col cols="7">
                         <v-text-field
                             class="caption"
-                            price_invest="price_invest"
+                            v-model="price_invest"
                             placeholder="투입할 자본금액"
                             suffix="만원"></v-text-field>
                     </v-col>
@@ -67,7 +67,7 @@
                     <v-col cols="7">
                         <v-text-field
                             class="caption"
-                            price_wbo="price_wbo"
+                            v-model="price_wbo"
                             placeholder="임대 보증금"
                             suffix="만원"></v-text-field>
                     </v-col>
@@ -77,7 +77,7 @@
                         <v-subheader class="caption" color="green darken-4">월세</v-subheader>
                     </v-col>
                     <v-col cols="7">
-                        <v-text-field class="caption" price_w="price_w" placeholder="월 임대료" suffix="만원"></v-text-field>
+                        <v-text-field class="caption" v-model="price_w" placeholder="월 임대료" suffix="만원"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -85,7 +85,7 @@
                         <v-subheader class="caption" color="green darken-4">대출 금리</v-subheader>
                     </v-col>
                     <v-col cols="7">
-                        <v-text-field class="caption" rate="rate" placeholder="이자율" suffix="(연 %)"></v-text-field>
+                        <v-text-field class="caption" v-model="rate" placeholder="이자율" suffix="(연 %)"></v-text-field>
                     </v-col>
                 </v-row>
 
