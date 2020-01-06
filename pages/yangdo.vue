@@ -194,9 +194,12 @@
 
     export default {
         name: 'yangdo',
-        date: new Date()
+        date_buy: new Date()
             .toISOString()
-            .substr(0, 10),
+            .substr(0, 10).replace('-', '').replace('-', ''),
+        date_transfer: new Date()
+            .toISOString()
+            .substr(0, 10).replace('-', '').replace('-', ''),
         data() {
             return {
                 text: 'text',

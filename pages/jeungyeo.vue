@@ -158,4 +158,9 @@
                                                                     display: flex;
                                                                     justify-content: center;
                                                                 }
+                                                                .iftog {
+                                                                    outline: black;
+                                                                    outline-style: outset;
+                                                                    outline-width: thin;
+                                                                }
                                                             </style>

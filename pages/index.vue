@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-layout column="column">
-            <v-flex xs12="xs12" sm8="sm8" md6="md6">
+            <v-flex xs12="xs12" sm8="sm8" md6="md6" class="bwcolor">
                 <v-flex class="text-center" align-center="align-center">
                     <img src="/rsmalllogo.png" alt="Vuetify.js" class="mb-5"></v-flex>
                     <div class="text-center">
@@ -14,7 +14,6 @@
                             class="flex-grow-1 flex-shrink-0; text-center">
                             <v-card
                                 class="lining"
-                                outlined="outlined"
                                 tile="tile"
                                 nuxt="nuxt"
                                 to="/chwideug">양도소득세</v-card>
@@ -25,7 +24,6 @@
                             class="flex-grow-1 flex-shrink-0; text-center">
                             <v-card
                                 class="lining"
-                                outlined="outlined"
                                 tile="tile"
                                 height="150"
                                 nuxt="nuxt"
@@ -37,7 +35,6 @@
                             class="flex-grow-1 flex-shrink-0; text-center">
                             <v-card
                                 class="lining"
-                                outlined="outlined"
                                 tile="tile"
                                 height="150"
                                 nuxt="nuxt"
@@ -49,7 +46,6 @@
                             class="flex-grow-1 flex-shrink-0; text-center">
                             <v-card
                                 class="lining"
-                                outlined="outlined"
                                 tile="tile"
                                 height="150"
                                 nuxt="nuxt"
@@ -61,7 +57,6 @@
                             class="flex-grow-1 flex-shrink-0; text-center">
                             <v-card
                                 class="lining"
-                                outlined="outlined"
                                 tile="tile"
                                 height="150"
                                 nuxt="nuxt"
@@ -73,7 +68,6 @@
                             class="flex-grow-1 flex-shrink-0; text-center">
                             <v-card
                                 class="lining"
-                                outlined="outlined"
                                 tile="tile"
                                 height="150"
                                 nuxt="nuxt"
@@ -85,7 +79,6 @@
                             class="flex-grow-1 flex-shrink-0; text-center">
                             <v-card
                                 class="lining"
-                                outlined="outlined"
                                 tile="tile"
                                 height="150"
                                 nuxt="nuxt"
@@ -97,7 +90,6 @@
                             class="flex-grow-1 flex-shrink-0; text-center">
                             <v-card
                                 class="lining"
-                                outlined="outlined"
                                 tile="tile"
                                 height="150"
                                 nuxt="nuxt"
@@ -113,6 +105,15 @@
         .lining {
             height: 150px;
             line-height: 150px;
-
+        }
+        .bwcolor{
+            background-color: white;
         }
     </style>
+
+    <!--
+            outline colorings
+            outline: rgb(210, 230, 210);
+            outline-style:outset;
+            outline-width:thin;
+    --!>
