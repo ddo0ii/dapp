@@ -60,7 +60,7 @@
                         </v-col>
                     </v-row>
                     <div class="being">
-                        <v-btn max-width="80%" min-width="80%" color="#2D9527" dark="dark">계산하기</v-btn>
+                        <v-btn @click="iTest" max-width="80%" min-width="80%" color="#2D9527" dark="dark">계산하기</v-btn>
                     </div>
 
                 </v-list-item-content>
@@ -70,15 +70,28 @@
     </v-layout>
 </template>
 <script>
+    import axios from "axios"
     export default {
         name: 'jeungyeo',
         data() {
-            return {
-                kind: 'wonli',
-                duration: null,
-                duration_g: null,
-                rate: null,
-                price: null
+            return {kind: 'wonli', duration: null, duration_g: null, rate: null, price: null}
+        },
+        methods: {
+            iTest() {
+                axios
+                    .post("https://www.ddhouse.co.kr/api/v1/public/calculator/interest", {
+                        kind: this.kind,
+                        duration: this.duration,
+                        duration_g: this.duration_g,
+                        rate: this.rate,
+                        price: this.price
+                    })
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             }
         }
     }

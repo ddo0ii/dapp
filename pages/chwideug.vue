@@ -46,21 +46,9 @@
                                                 color="blue"
                                                 group="group"
                                                 style="flex-wrap: wrap; width: 100%">
-                                                <v-btn
-                                                    class="caption"
-                                                    value="house"
-                                                    height="40px"
-                                                    style="width: 45%">주택</v-btn>
-                                                <v-btn
-                                                    class="caption"
-                                                    value="land"
-                                                    height="40px"
-                                                    style="width: 45%">농지</v-btn>
-                                                <v-btn
-                                                    class="caption"
-                                                    value="farm"
-                                                    height="40px"
-                                                    style="width: 90%">토지,건물,오피스텔</v-btn>
+                                                <v-btn class="caption" value="house" height="40px" style="width: 45%">주택</v-btn>
+                                                <v-btn class="caption" value="land" height="40px" style="width: 45%">농지</v-btn>
+                                                <v-btn class="caption" value="farm" height="40px" style="width: 90%">토지,건물,오피스텔</v-btn>
                                             </v-btn-toggle>
                                         </v-list-item-content>
                                     </v-list-item>
@@ -74,21 +62,9 @@
                                                 color="blue"
                                                 group="group"
                                                 style="flex-wrap: wrap; width: 100%">
-                                                <v-btn
-                                                    class="caption"
-                                                    value="meme"
-                                                    height="40px"
-                                                    style="width: 22.5%">매매</v-btn>
-                                                <v-btn
-                                                    class="caption"
-                                                    value="gift"
-                                                    height="40px"
-                                                    style="width: 22.5%">증여</v-btn>
-                                                <v-btn
-                                                    class="caption"
-                                                    value="inherit"
-                                                    height="40px"
-                                                    style="width: 22.5%">상속</v-btn>
+                                                <v-btn class="caption" value="meme" height="40px" style="width: 22.5%">매매</v-btn>
+                                                <v-btn class="caption" value="gift" height="40px" style="width: 22.5%">증여</v-btn>
+                                                <v-btn class="caption" value="inherit" height="40px" style="width: 22.5%">상속</v-btn>
                                                 <v-btn
                                                     v-if="(asset_type==='house')||(asset_type==='farm')"
                                                     class="caption"
@@ -154,7 +130,7 @@
                                             </v-col>
 
                                             <div class="being">
-                                                <v-btn max-width="80%" min-width="80%" color="#2D9527" dark="dark">계산하기</v-btn>
+                                                <v-btn @click="chwiTest" max-width="80%" min-width="80%" color="#2D9527" dark="dark">계산하기</v-btn>
                                             </div>
 
                                         </v-list-item-content>
@@ -164,16 +140,38 @@
                             </v-layout>
                         </template>
                         <script>
+                            import axios from "axios"
                             export default {
                                 name: 'chwideug',
                                 data() {
                                     return {
-                                        asset_type:'house',
+                                        asset_type: 'house',
                                         kind: 'meme',
                                         area: 'small',
                                         farm_type: 'new',
                                         dialog: false,
                                         price: null,
+                                    }
+                                },
+                                methods: {
+                                    chwiTest() {
+                                        axios
+                                            .post(
+                                                "https://www.ddhouse.co.kr/api/v1/public/calculator/fee-registration",
+                                                {
+                                                    asset_type: this.asset_type,
+                                                    kind: this.kind,
+                                                    area: this.area,
+                                                    farm_type: this.farm_type,
+                                                    price: this.price
+                                                }
+                                            )
+                                            .then(res => {
+                                                console.log(res);
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                            });
                                     }
                                 }
                             }

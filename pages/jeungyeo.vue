@@ -111,8 +111,13 @@
                                                                                     <v-text-field class="caption" v-model="price" placeholder="증여금액 입력" suffix="만원"></v-text-field>
                                                                                 </v-col>
 
-                                                                                <div class="being" @click="jeungTest">
-                                                                                    <v-btn max-width="80%" min-width="80%" color="#2D9527" dark="dark">계산하기</v-btn>
+                                                                                <div class="being">
+                                                                                    <v-btn
+                                                                                        @click="jeungTest"
+                                                                                        max-width="80%"
+                                                                                        min-width="80%"
+                                                                                        color="#2D9527"
+                                                                                        dark="dark">계산하기</v-btn>
                                                                                 </div>
 
                                                                             </v-list-item-content>
@@ -133,14 +138,10 @@
                                                                         jeungTest() {
                                                                             axios
                                                                                 .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-gift", {
-                                                                                    registration: this.registration,
-                                                                                    asset_type: this.asset_type,
-                                                                                    house_count: this.house_count,
-                                                                                    date_buy: this.date_buy,
-                                                                                    price_buy: this.price_buy,
-                                                                                    date_transfer: this.date_transfer,
-                                                                                    price_transfer: this.price_transfer,
-                                                                                    price_etc: this.price_etc
+                                                                                    giver: this.price,
+                                                                                    receiver_age: this.receiver_age,
+                                                                                    receiver_relation: this.receiver_relation,
+                                                                                    price: this.price
                                                                                 })
                                                                                 .then(res => {
                                                                                     console.log(res);

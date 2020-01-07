@@ -90,7 +90,12 @@
                 </v-row>
 
                 <div class="being">
-                    <v-btn max-width="80%" min-width="80%" color="#2D9527" dark="dark">계산하기</v-btn>
+                    <v-btn
+                        @click="tuTest"
+                        max-width="80%"
+                        min-width="80%"
+                        color="#2D9527"
+                        dark="dark">계산하기</v-btn>
                 </div>
 
             </v-flex>
@@ -98,10 +103,36 @@
 
     </template>
     <script>
+        import axios from "axios"
         export default {
-            name: 'yangdo',
+            name: 'tuja',
             data() {
-                return {dialog: false, price_m: null, price_invest: null, price_wbo: null, price_w: null, rate: null}
+                return {
+                    dialog: false,
+                    price_m: null,
+                    price_invest: null,
+                    price_wbo: null,
+                    price_w: null,
+                    rate: null
+                }
+            },
+            methods: {
+                tuTest() {
+                    axios
+                        .post("https://www.ddhouse.co.kr/api/v1/public/calculator/income", {
+                            price_m: this.price_m,
+                            price_invest: this.price_invest,
+                            price_wbo: this.price_wbo,
+                            price_w: this.price_w,
+                            rate: this.rate
+                        })
+                        .then(res => {
+                            console.log(res);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
             }
         }
     </script>

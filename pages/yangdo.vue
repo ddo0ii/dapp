@@ -95,7 +95,6 @@
                             ref="menu"
                             v-model="menu"
                             :close-on-content-click="false"
-                            :return-value.sync="date_buy"
                             transition="scale-transition"
                             offset-y="offset-y"
                             min-width="290px">
@@ -107,14 +106,7 @@
                                     readonly="readonly"
                                     v-on="on"></v-text-field>
                             </template>
-                            <v-date-picker v-model="date_buy" no-title="no-title" scrollable="scrollable">
-                                <v-btn class="caption" text="text" color="primary" @click="menu = false">Cancel</v-btn>
-                                <v-btn
-                                    class="caption"
-                                    text="text"
-                                    color="primary"
-                                    @click="$refs.menu.save(date_buy)">OK</v-btn>
-                            </v-date-picker>
+                            <v-date-picker v-model="date" no-title="no-title" @input="menu=false"></v-date-picker>
                         </v-menu>
                     </v-col>
                     <v-col cols="6">
@@ -130,7 +122,6 @@
                             ref="menu2"
                             v-model="menu2"
                             :close-on-content-click="false"
-                            :return-value.sync="date_transfer"
                             transition="scale-transition"
                             offset-y="offset-y"
                             min-width="290px">
@@ -142,17 +133,7 @@
                                     readonly="readonly"
                                     v-on="on"></v-text-field>
                             </template>
-                            <v-date-picker
-                                v-model="date_transfer"
-                                no-title="no-title"
-                                scrollable="scrollable">
-                                <v-btn class="caption" text="text" color="primary" @click="menu2 = false">Cancel</v-btn>
-                                <v-btn
-                                    class="caption"
-                                    text="text"
-                                    color="primary"
-                                    @click="$refs.menu2.save(date_transfer)">OK</v-btn>
-                            </v-date-picker>
+                            <v-date-picker v-model="date2" no-title="no-title" @input="menu2=false"></v-date-picker>
                         </v-menu>
                     </v-col>
                     <v-col cols="6">
@@ -191,15 +172,22 @@
 </template>
 <script>
     import axios from "axios"
-
     export default {
         name: 'yangdo',
-        date_buy: new Date()
-            .toISOString()
-            .substr(0, 10).replace('-', '').replace('-', ''),
-        date_transfer: new Date()
-            .toISOString()
-            .substr(0, 10).replace('-', '').replace('-', ''),
+        data: vm => ({
+            date: new Date()
+                .toISOString()
+                .substr(0, 10),
+            date_buy: vm.formatDate(new Date().toISOString().substr(0, 10)),
+            menu: false
+        }),
+        data: vm2 => ({
+            date2: new Date()
+                .toISOString()
+                .substr(0, 10),
+            date_transfer: vm2.formatDate2(new Date().toISOString().substr(0, 10)),
+            menu2: false
+        }),
         data() {
             return {
                 text: 'text',
@@ -211,6 +199,8 @@
                 menu2: false,
                 dialog: false,
                 hidden: false,
+                date: '',
+                date2: '',
                 date_buy: '',
                 price_buy: '',
                 date_transfer: '',
@@ -218,11 +208,32 @@
                 price_etc: ''
             }
         },
+        watch: {
+            date(val) {
+                this.date_buy = this.formatDate(this.date)
+            },
+            date2(val) {
+                this.date_transfer = this.formatDate(this.date2)
+            }
+        },
         methods: {
+            formatDate(date) {
+                if (!date) 
+                    return null
+                const [year, month, day] = date.split('-')
+                return `${year}${month}${day}`
+            },
+            formatDate2(date2) {
+                if (!date2) 
+                    return null
+                const [year, month, day] = date2.split('-')
+                return `${year}${month}${day}`
+            },
+
             yangTest() {
                 axios
                     .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-transfer", {
-                       registration: this.registration,
+                        registration: this.registration,
                         asset_type: this.asset_type,
                         house_count: this.house_count,
                         date_buy: this.date_buy,
@@ -237,9 +248,8 @@
                     .catch(err => {
                         console.log(err);
                     });
-            }
+            },
         }
-
     }
 </script>
 

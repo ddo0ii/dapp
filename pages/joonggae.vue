@@ -73,9 +73,71 @@
                             </v-col>
                         </v-row>
                     </div>
-                    <div class="being">
-                        <v-btn max-width="80%" min-width="80%" color="#2D9527" dark="dark">계산하기</v-btn>
-                    </div>
+                    <v-dialog
+                        v-model="dialog"
+                        fullscreen="fullscreen"
+                        hide-overlay="hide-overlay"
+                        transition="dialog-bottom-transition">
+                        <template v-slot:activator="{ on }">
+                            <div class="being">
+                                <v-btn
+                                    @click="joongTest"
+                                    max-width="80%"
+                                    min-width="80%"
+                                    color="#2D9527"
+                                    dark="dark"
+                                    v-on="on">계산하기</v-btn>
+                            </div>
+                        </template>
+                        <v-card>
+                            <v-toolbar dark="dark" color="#2D9527">
+                                <v-btn icon="icon" dark="dark" @click="dialog = false">
+                                    <v-icon>mdi-close</v-icon>
+                                </v-btn>
+                                <v-toolbar-title>계산 결과</v-toolbar-title>
+                            </v-toolbar>
+
+                            <v-container v-if="calc_result.which === 'fee-broker'">
+                                <v-list>
+                                    <v-list-item>
+                                        <v-list-item-content class="font-weight-bold">거래금액</v-list-item-content>
+                                        <v-list-item-content class="font-weight-bold">{{calc_result.result.price_basis}}</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content>요율</v-list-item-content>
+                                        <v-list-item-content>{{calc_result.result.rate}}</v-list-item-content>
+                                    </v-list-item>
+
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">수수료</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{calc_result.result.fee_ori}}</v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
+                            </v-container>
+                            <v-divider></v-divider>
+                            <v-container v-if="calc_result.which === 'fee-broker'">
+                                <v-list>
+                                    <v-list-item>
+                                        <v-list-item-content>상한금액</v-list-item-content>
+                                        <v-list-item-content>{{calc_result.result.fee_limit}}</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content class="font-weight-bold">중개수수료</v-list-item-content>
+                                        <v-list-item-content class="font-weight-bold">{{calc_result.result.fee}}</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content class="font-weight-bold">부가세</v-list-item-content>
+                                        <v-list-item-content class="font-weight-bold">{{calc_result.result.fee_tax}}</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">부가세포함</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{calc_result.result.fee_tot}}</v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
+                            </v-container>
+
+                        </v-card>
+                    </v-dialog>
 
                 </v-list-item-content>
             </v-list-item>
@@ -84,6 +146,7 @@
     </v-layout>
 </template>
 <script>
+    import axios from "axios"
     export default {
         name: 'jeungyeo',
         data() {
@@ -95,7 +158,45 @@
                 price_w: '',
                 price_current: '',
                 price_premium: '',
-                letspost: ''
+                letspost: '',
+                sheet: false,
+                dialog: false,
+                price_basis: '',
+                fee_tot:'',
+                fee:'',
+                fee_ori:'',
+                fee_tax:'',
+                rate:'',
+                fee_limit:'',
+                calc_result: {
+                    which: '',
+                    result: null
+                }
+            }
+        },
+        methods: {
+            joongTest() {
+                axios
+                    .post("https://www.ddhouse.co.kr/api/v1/public/calculator/fee-broker", {
+                        mjws: this.mjws,
+                        asset_type: this.asset_type,
+                        price_m: this.price_m,
+                        price_wbo: this.price_wbo,
+                        price_w: this.price_w,
+                        price_current: this.price_current,
+                        price_premium: this.price_premium
+                    })
+                    .then(res => {
+                        console.log(res);
+                        this.calc_result.which = 'fee-broker'
+                        this.calc_result.result = res
+                            .data
+                            console
+                            .log(this.calc_result)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             }
         }
     }
