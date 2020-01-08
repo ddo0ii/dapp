@@ -101,16 +101,15 @@
                                 <v-list>
                                     <v-list-item>
                                         <v-list-item-content class="font-weight-bold">거래금액</v-list-item-content>
-                                        <v-list-item-content class="font-weight-bold">{{calc_result.result.price_basis}}</v-list-item-content>
+                                        <v-list-item-content class="font-weight-bold">{{calc_result.result.price_basis}}원</v-list-item-content>
                                     </v-list-item>
                                     <v-list-item>
                                         <v-list-item-content>요율</v-list-item-content>
-                                        <v-list-item-content>{{calc_result.result.rate}}</v-list-item-content>
+                                        <v-list-item-content>{{calc_result.result.rate}}%</v-list-item-content>
                                     </v-list-item>
-
                                     <v-list-item>
                                         <v-list-item-content style="color: #0085FF">수수료</v-list-item-content>
-                                        <v-list-item-content style="color: #0085FF">{{calc_result.result.fee_ori}}</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{calc_result.result.fee_ori}}원</v-list-item-content>
                                     </v-list-item>
                                 </v-list>
                             </v-container>
@@ -119,19 +118,19 @@
                                 <v-list>
                                     <v-list-item>
                                         <v-list-item-content>상한금액</v-list-item-content>
-                                        <v-list-item-content>{{calc_result.result.fee_limit}}</v-list-item-content>
+                                        <v-list-item-content>{{calc_result.result.fee_limit}}원</v-list-item-content>
                                     </v-list-item>
                                     <v-list-item>
                                         <v-list-item-content class="font-weight-bold">중개수수료</v-list-item-content>
-                                        <v-list-item-content class="font-weight-bold">{{calc_result.result.fee}}</v-list-item-content>
+                                        <v-list-item-content class="font-weight-bold">{{calc_result.result.fee}}원</v-list-item-content>
                                     </v-list-item>
                                     <v-list-item>
                                         <v-list-item-content class="font-weight-bold">부가세</v-list-item-content>
-                                        <v-list-item-content class="font-weight-bold">{{calc_result.result.fee_tax}}</v-list-item-content>
+                                        <v-list-item-content class="font-weight-bold">{{calc_result.result.fee_tax}}원</v-list-item-content>
                                     </v-list-item>
                                     <v-list-item>
                                         <v-list-item-content style="color: #0085FF">부가세포함</v-list-item-content>
-                                        <v-list-item-content style="color: #0085FF">{{calc_result.result.fee_tot}}</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{calc_result.result.fee_tot}}원</v-list-item-content>
                                     </v-list-item>
                                 </v-list>
                             </v-container>
@@ -162,12 +161,12 @@
                 sheet: false,
                 dialog: false,
                 price_basis: '',
-                fee_tot:'',
-                fee:'',
-                fee_ori:'',
-                fee_tax:'',
-                rate:'',
-                fee_limit:'',
+                fee_tot: '',
+                fee: '',
+                fee_ori: '',
+                fee_tax: '',
+                rate: '',
+                fee_limit: '',
                 calc_result: {
                     which: '',
                     result: null
@@ -189,10 +188,8 @@
                     .then(res => {
                         console.log(res);
                         this.calc_result.which = 'fee-broker'
-                        this.calc_result.result = res
-                            .data
-                            console
-                            .log(this.calc_result)
+                        this.calc_result.result = res.data
+                            console.log(this.calc_result)
                     })
                     .catch(err => {
                         console.log(err);

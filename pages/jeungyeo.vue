@@ -1,7 +1,7 @@
 <template>
     <v-layout column="column" row="row">
         <v-flex wrap="wrap">
-            <v-dialog v-model="dialog" width="600px">
+            <v-dialog v-model="dialog2" width="600px">
                 <template v-slot:activator="{ on }">
                     <v-btn
                         absolute="absolute"
@@ -48,7 +48,7 @@
                                                                                         class="caption"
                                                                                         color="blue darken-1"
                                                                                         text="text"
-                                                                                        @click="dialog = false">OK</v-btn>
+                                                                                        @click="dialog2 = false">OK</v-btn>
                                                                                 </v-card-actions>
                                                                             </v-card>
                                                                         </v-dialog>
@@ -88,7 +88,6 @@
                                                                             <v-list-item>
                                                                                 <v-list-item-content>
                                                                                     <p class="font-weight-black">수증자 - 증여자 관계 구분</p>
-
                                                                                     <v-btn-toggle
                                                                                         v-model="receiver_relation"
                                                                                         tile="tile"
@@ -111,14 +110,79 @@
                                                                                     <v-text-field class="caption" v-model="price" placeholder="증여금액 입력" suffix="만원"></v-text-field>
                                                                                 </v-col>
 
-                                                                                <div class="being">
-                                                                                    <v-btn
-                                                                                        @click="jeungTest"
-                                                                                        max-width="80%"
-                                                                                        min-width="80%"
-                                                                                        color="#2D9527"
-                                                                                        dark="dark">계산하기</v-btn>
-                                                                                </div>
+                                                                                <v-dialog
+                                                                                    v-model="dialog"
+                                                                                    fullscreen="fullscreen"
+                                                                                    hide-overlay="hide-overlay"
+                                                                                    transition="dialog-bottom-transition">
+                                                                                    <template v-slot:activator="{ on }">
+                                                                                        <div class="being">
+                                                                                            <v-btn
+                                                                                                @click="jeungTest"
+                                                                                                max-width="80%"
+                                                                                                min-width="80%"
+                                                                                                color="#2D9527"
+                                                                                                dark="dark"
+                                                                                                v-on="on">계산하기</v-btn>
+                                                                                        </div>
+                                                                                    </template>
+                                                                                    <v-card>
+                                                                                        <v-toolbar dark="dark" color="#2D9527">
+                                                                                            <v-btn icon="icon" dark="dark" @click="dialog = false">
+                                                                                                <v-icon>mdi-close</v-icon>
+                                                                                            </v-btn>
+                                                                                            <v-toolbar-title>계산 결과</v-toolbar-title>
+                                                                                        </v-toolbar>
+
+                                                                                        <v-container v-if="jcalc_result.jwhich === 'tax-gift'">
+                                                                                            <v-list>
+                                                                                                <v-list-item>
+                                                                                                    <v-list-item-content>증여금액</v-list-item-content>
+                                                                                                    <v-list-item-content>{{jcalc_result.jresult.giftPrice}}원</v-list-item-content>
+                                                                                                </v-list-item>
+                                                                                                <v-list-item>
+                                                                                                    <v-list-item-content>공제금액</v-list-item-content>
+                                                                                                    <v-list-item-content>{{jcalc_result.jresult.deductedPrice}}원</v-list-item-content>
+                                                                                                </v-list-item>
+                                                                                                <v-list-item>
+                                                                                                    <v-list-item-content style="color: #0085FF">과세표준</v-list-item-content>
+                                                                                                    <v-list-item-content style="color: #0085FF">{{jcalc_result.jresult.taxStandard}}원</v-list-item-content>
+                                                                                                </v-list-item>
+                                                                                            </v-list>
+                                                                                        </v-container>
+                                                                                        <v-divider></v-divider>
+                                                                                        <v-container v-if="jcalc_result.jwhich === 'tax-gift'">
+                                                                                            <v-list>
+                                                                                                <v-list-item>
+                                                                                                    <v-list-item-content>세율</v-list-item-content>
+                                                                                                    <v-list-item-content>{{jcalc_result.jresult.taxRatio}}%</v-list-item-content>
+                                                                                                </v-list-item>
+                                                                                                <v-list-item>
+                                                                                                    <v-list-item-content>누진공제액</v-list-item-content>
+                                                                                                    <v-list-item-content>{{jcalc_result.jresult.graduallyAdvancedDeduction}}원</v-list-item-content>
+                                                                                                </v-list-item>
+                                                                                                <v-list-item>
+                                                                                                    <v-list-item-content style="color: #0085FF">산출세액</v-list-item-content>
+                                                                                                    <v-list-item-content style="color: #0085FF">{{jcalc_result.jresult.calculatedTax}}원</v-list-item-content>
+                                                                                                </v-list-item>
+                                                                                            </v-list>
+                                                                                        </v-container>
+                                                                                        <v-divider></v-divider>
+                                                                                        <v-container v-if="jcalc_result.jwhich === 'tax-gift'">
+                                                                                            <v-list>
+                                                                                                <v-list-item>
+                                                                                                    <v-list-item-content>자진신고시 공제</v-list-item-content>
+                                                                                                    <v-list-item-content>{{jcalc_result.jresult.selfAssessDeduction}}원</v-list-item-content>
+                                                                                                </v-list-item>
+                                                                                                <v-list-item>
+                                                                                                    <v-list-item-content style="color: #0085FF">증여세</v-list-item-content>
+                                                                                                    <v-list-item-content style="color: #0085FF">{{jcalc_result.jresult.giftTax}}원</v-list-item-content>
+                                                                                                </v-list-item>
+                                                                                            </v-list>
+                                                                                        </v-container>
+
+                                                                                    </v-card>
+                                                                                </v-dialog>
 
                                                                             </v-list-item-content>
                                                                         </v-list-item>
@@ -132,7 +196,30 @@
                                                                 export default {
                                                                     name: 'jeungyeo',
                                                                     data() {
-                                                                        return {giver: 'couple', receiver_age: 'adult', receiver_relation: 'exclude', dialog: false, price: null}
+                                                                        return {
+                                                                            giver: 'couple',
+                                                                            receiver_age: 'adult',
+                                                                            receiver_relation: 'exclude',
+                                                                            dialog: false,
+                                                                            dialog2: false,
+                                                                            price: null,
+                                                                            jcalc_result: {
+                                                                                jwhich: '',
+                                                                                jresult: null
+                                                                            },
+
+                                                                            extraChargeAppliedPrice: '',
+                                                                            skippingGenerationTax: '',
+
+                                                                            giftPrice: '',
+                                                                            deductedPrice: '',
+                                                                            taxStandard: '',
+                                                                            taxRatio: '',
+                                                                            graduallyAdvancedDeduction: '',
+                                                                            calculatedTax: '',
+                                                                            selfAssessDeduction: '',
+                                                                            giftTax: ''
+                                                                        }
                                                                     },
                                                                     methods: {
                                                                         jeungTest() {
@@ -145,6 +232,11 @@
                                                                                 })
                                                                                 .then(res => {
                                                                                     console.log(res);
+                                                                                    this.jcalc_result.jwhich = 'tax-gift'
+                                                                                    this.jcalc_result.jresult = res
+                                                                                        .data
+                                                                                        console
+                                                                                        .log(this.jcalc_result)
                                                                                 })
                                                                                 .catch(err => {
                                                                                     console.log(err);

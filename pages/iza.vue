@@ -59,9 +59,92 @@
                                 suffix="개월"></v-text-field>
                         </v-col>
                     </v-row>
-                    <div class="being">
-                        <v-btn @click="iTest" max-width="80%" min-width="80%" color="#2D9527" dark="dark">계산하기</v-btn>
-                    </div>
+                    <v-dialog
+                        v-model="dialog"
+                        fullscreen="fullscreen"
+                        hide-overlay="hide-overlay"
+                        transition="dialog-bottom-transition">
+                        <template v-slot:activator="{ on }">
+                            <div class="being">
+                                <v-btn
+                                    @click="iTest"
+                                    max-width="80%"
+                                    min-width="80%"
+                                    color="#2D9527"
+                                    dark="dark"
+                                    v-on="on">계산하기</v-btn>
+                            </div>
+                        </template>
+                        <v-card>
+                            <v-toolbar dark="dark" color="#2D9527">
+                                <v-btn icon="icon" dark="dark" @click="dialog = false">
+                                    <v-icon>mdi-close</v-icon>
+                                </v-btn>
+                                <v-toolbar-title>계산 결과</v-toolbar-title>
+                            </v-toolbar>
+
+                            <v-container v-if="icalc_result.iwhich === 'interest'">
+                                <v-list>
+                                    <v-list-item>
+                                        <v-list-item-content class="font-weight-bold">대출원금</v-list-item-content>
+                                        <v-list-item-content>{{price}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content class="font-weight-bold">총대출이자</v-list-item-content>
+                                        <v-list-item-content>{{icalc_result.iresult.total_interest}}</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content class="font-weight-bold">총상환금액</v-list-item-content>
+                                        <v-list-item-content>{{icalc_result.iresult.total_interest}}</v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
+                            </v-container>
+                            <v-divider></v-divider>
+                            <v-container v-if="icalc_result.iwhich === 'interest'">
+                                <table width="100%">
+                                    <thead>
+                                        <tr>
+                                            <td class="caption font-weight-bold" width="10%">회차</td>
+                                            <td class="caption font-weight-bold" width="22.5%">납입원금</td>
+                                            <td class="caption font-weight-bold" width="22.5%">대출이자</td>
+                                            <td class="caption font-weight-bold" width="22.5%">월상환금</td>
+                                            <td class="caption font-weight-bold" width="22.5%">대출잔금</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, idx) in icalc_result.iresult.list" :key="idx">
+                                            <td class="caption font-weight-bold" width="10%">{{item.index}}</td>
+                                            <td class="caption font-weight-bold" width="22.5%">{{item.originRepay}}</td>
+                                            <td class="caption font-weight-bold" width="22.5%">{{item.interestRepay}}</td>
+                                            <td class="caption font-weight-bold" width="22.5%">{{item.totalRepay}}</td>
+                                            <td class="caption font-weight-bold" width="22.5%">{{item.remainAmount}}</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+
+                                <!-- <v-list> <v-list-item> <v-list-item-content class="caption
+                                font-weight-bold">회차</v-list-item-content> <v-list-item-content class="caption
+                                font-weight-bold">납임원금</v-list-item-content> <v-list-item-content class="caption
+                                font-weight-bold">대출이자</v-list-item-content> <v-list-item-content class="caption
+                                font-weight-bold">월상환금</v-list-item-content> <v-list-item-content class="caption
+                                font-weight-bold">대출잔금</v-list-item-content> </v-list-item> <v-list-item
+                                v-for="(listed, i) in list" :key="i"> <v-list-item-content
+                                class="caption">{{icalc_result.iresult.listed.index}}</v-list-item-content>
+                                <v-list-item-content
+                                class="caption">{{icalc_result.iresult.listed.originRepay}}</v-list-item-content>
+                                <v-list-item-content
+                                class="caption">{{icalc_result.iresult.listed.interestRepay}}</v-list-item-content>
+                                <v-list-item-content
+                                class="caption">{{icalc_result.iresult.listed.totalRepay}}</v-list-item-content>
+                                <v-list-item-content
+                                class="caption">{{icalc_result.iresult.listed.remainAmount}}</v-list-item-content>
+                                </v-list-item> </v-list> -->
+
+                            </v-container>
+
+                        </v-card>
+                    </v-dialog>
 
                 </v-list-item-content>
             </v-list-item>
@@ -74,7 +157,25 @@
     export default {
         name: 'jeungyeo',
         data() {
-            return {kind: 'wonli', duration: null, duration_g: null, rate: null, price: null}
+            return {
+                kind: 'wonli',
+                duration: null,
+                duration_g: null,
+                rate: null,
+                price: null,
+                dialog: false,
+                total_interest: '',
+                index: '',
+                originRepay: '',
+                interestRepay: '',
+                totalRepay: '',
+                remainAmount: '',
+                icalc_result: {
+                    iwhich: '',
+                    iresult: null
+                },
+                list: []
+            }
         },
         methods: {
             iTest() {
@@ -88,6 +189,11 @@
                     })
                     .then(res => {
                         console.log(res);
+                        this.icalc_result.iwhich = 'interest'
+                        this.icalc_result.iresult = res
+                            .data
+                            console
+                            .log(this.icalc_result)
                     })
                     .catch(err => {
                         console.log(err);

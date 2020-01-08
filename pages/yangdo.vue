@@ -1,7 +1,7 @@
 <template>
     <v-layout column="column" row="row">
         <v-flex wrap="wrap">
-            <v-dialog v-model="dialog" width="600px">
+            <v-dialog v-model="dialog2" width="600px">
                 <template v-slot:activator="{ on }">
                     <v-btn
                         absolute="absolute"
@@ -26,7 +26,7 @@
                             class="caption"
                             color="green darken-1"
                             text="text"
-                            @click="dialog = false">OK</v-btn>
+                            @click="dialog2 = false">OK</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -155,15 +155,109 @@
                             suffix="만원"></v-text-field>
                     </v-col>
 
-                    <div class="being">
-                        <v-btn
-                            @click="yangTest"
-                            max-width="80%"
-                            min-width="80%"
-                            color="#2D9527"
-                            dark="dark">계산하기</v-btn>
-                    </div>
+                   <v-dialog
+                        v-model="dialog"
+                        fullscreen="fullscreen"
+                        hide-overlay="hide-overlay"
+                        transition="dialog-bottom-transition">
+                        <template v-slot:activator="{ on }">
+                            <div class="being">
+                                <v-btn
+                                    @click="yangTest"
+                                    max-width="80%"
+                                    min-width="80%"
+                                    color="#2D9527"
+                                    dark="dark"
+                                    v-on="on">계산하기</v-btn>
+                            </div>
+                        </template>
+                        <v-card>
+                            <v-toolbar dark="dark" color="#2D9527">
+                                <v-btn icon="icon" dark="dark" @click="dialog = false">
+                                    <v-icon>mdi-close</v-icon>
+                                </v-btn>
+                                <v-toolbar-title>계산 결과</v-toolbar-title>
+                            </v-toolbar>
 
+                            <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
+                                <v-list>
+                                    <v-list-item>
+                                        <v-list-item-content>양도가액</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.yangdoPrice}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content>취득가액</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.chuiDeukPrice}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content>필요경비</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.cost}}원</v-list-item-content>
+                                    </v-list-item>
+
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">양도차익</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.yangdoGains}}원</v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
+                            </v-container>
+                            <v-divider></v-divider>
+                            <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
+                                <v-list>
+                                    <v-list-item>
+                                        <v-list-item-content>장기보유특별공제</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.longTermDeduction}}원</v-list-item-content>
+                                    </v-list-item>                                    
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">양도소득 금액</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.yangdoIncomePrice}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content>양도소득 기본공제<br>(연간 250만원 한도)</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.yangdoBasicDeduction}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">과세표준</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.taxStandard}}원</v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
+                            </v-container>
+                            <v-divider></v-divider>
+                            <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
+                                <v-list>
+                                    <v-list-item>
+                                        <v-list-item-content>세율</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.taxRatio}}%</v-list-item-content>
+                                    </v-list-item>                                    
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">세율 적용값</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.taxRatioApplied}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content>누진공제액</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.graduallyAdvancedDeduction}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">양도소득세</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.yangdoIncomeTax}}원</v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
+                            </v-container>
+                            <v-divider></v-divider>
+                            <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
+                                <v-list>
+                                    <v-list-item>
+                                        <v-list-item-content>지방소득세(주민세)</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.jibangIncomeTax}}원</v-list-item-content>
+                                    </v-list-item>                                    
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">총 비용</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.totalPrice}}원</v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
+                            </v-container>
+
+                        </v-card>
+                    </v-dialog>
                 </v-list-item-content>
             </v-list-item>
 
@@ -198,6 +292,7 @@
                 menu: false,
                 menu2: false,
                 dialog: false,
+                dialog2: false,
                 hidden: false,
                 date: '',
                 date2: '',
@@ -205,7 +300,28 @@
                 price_buy: '',
                 date_transfer: '',
                 price_transfer: '',
-                price_etc: ''
+                price_etc: '',
+                ycalc_result: {
+                    ywhich: '',
+                    yresult: null
+                },                
+                possessPeriod: '',              
+                yangdoGainsDeducted: '',
+                
+                yangdoPrice: '',
+                chuiDeukPrice: '',
+                cost: '',
+                yangdoGains: '',
+                longTermDeduction: '',
+                yangdoIncomePrice: '',
+                yangdoBasicDeduction: '',
+                taxStandard: '',
+                taxRatio: '',
+                taxRatioApplied: '',
+                graduallyAdvancedDeduction: '',
+                yangdoIncomeTax: '',
+                jibangIncomeTax: '',
+                totalPrice: '',
             }
         },
         watch: {
@@ -244,6 +360,9 @@
                     })
                     .then(res => {
                         console.log(res);
+                        this.ycalc_result.ywhich = 'tax-transfer'
+                        this.ycalc_result.yresult = res.data
+                        console.log(this.ycalc_result)
                     })
                     .catch(err => {
                         console.log(err);

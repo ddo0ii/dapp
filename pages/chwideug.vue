@@ -1,7 +1,7 @@
 <template>
     <v-layout column="column" row="row">
         <v-flex wrap="wrap">
-            <v-dialog v-model="dialog" width="600px">
+            <v-dialog v-model="dialog2" width="600px">
                 <template v-slot:activator="{ on }">
                     <v-btn
                         absolute="absolute"
@@ -33,7 +33,7 @@
                                                     class="caption"
                                                     color="blue darken-1"
                                                     text="text"
-                                                    @click="dialog = false">OK</v-btn>
+                                                    @click="dialog2 = false">OK</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-dialog>
@@ -47,8 +47,8 @@
                                                 group="group"
                                                 style="flex-wrap: wrap; width: 100%">
                                                 <v-btn class="caption" value="house" height="40px" style="width: 45%">주택</v-btn>
-                                                <v-btn class="caption" value="land" height="40px" style="width: 45%">농지</v-btn>
-                                                <v-btn class="caption" value="farm" height="40px" style="width: 90%">토지,건물,오피스텔</v-btn>
+                                                <v-btn class="caption" value="farm" height="40px" style="width: 45%">농지</v-btn>
+                                                <v-btn class="caption" value="land" height="40px" style="width: 90%">토지,건물,오피스텔</v-btn>
                                             </v-btn-toggle>
                                         </v-list-item-content>
                                     </v-list-item>
@@ -66,7 +66,7 @@
                                                 <v-btn class="caption" value="gift" height="40px" style="width: 22.5%">증여</v-btn>
                                                 <v-btn class="caption" value="inherit" height="40px" style="width: 22.5%">상속</v-btn>
                                                 <v-btn
-                                                    v-if="(asset_type==='house')||(asset_type==='farm')"
+                                                    v-if="(asset_type==='house')||(asset_type==='land')"
                                                     class="caption"
                                                     kind="build"
                                                     value="b4"
@@ -94,7 +94,7 @@
                                         </v-list-item>
                                     </div>
 
-                                    <div v-if="(asset_type==='land')&&(kind==='meme')">
+                                    <div v-if="(asset_type==='farm')&&(kind==='meme')">
                                         <v-list-item>
                                             <v-list-item-content>
                                                 <v-btn-toggle
@@ -129,57 +129,177 @@
                                                 <v-text-field class="caption" v-model="price" placeholder="취득가액 입력" suffix="만원"></v-text-field>
                                             </v-col>
 
-                                            <div class="being">
-                                                <v-btn @click="chwiTest" max-width="80%" min-width="80%" color="#2D9527" dark="dark">계산하기</v-btn>
-                                            </div>
+                                            <v-dialog
+                                                v-model="dialog"
+                                                fullscreen="fullscreen"
+                                                hide-overlay="hide-overlay"
+                                                transition="dialog-bottom-transition">
+                                                <template v-slot:activator="{ on }">
+                                                    <div class="being">
+                                                        <v-btn
+                                                            @click="chwiTest"
+                                                            max-width="80%"
+                                                            min-width="80%"
+                                                            color="#2D9527"
+                                                            dark="dark"
+                                                            v-on="on">계산하기</v-btn>
+                                                    </div>
+                                                </template>
+                                                <v-card>
+                                                    <v-toolbar dark="dark" color="#2D9527">
+                                                        <v-btn icon="icon" dark="dark" @click="dialog = false">
+                                                            <v-icon>mdi-close</v-icon>
+                                                        </v-btn>
+                                                        <v-toolbar-title>계산 결과</v-toolbar-title>
+                                                    </v-toolbar>
 
-                                        </v-list-item-content>
-                                    </v-list-item>
+                                                    <v-container v-if="ccalc_result.cwhich === 'fee-registration'">
+                                                        <v-list>
+                                                            <v-list-item>
+                                                                <v-list-item-content>취득세</v-list-item-content>
+                                                                <v-list-item-content>{{ccalc_result.cresult.chui_deuk_tax}}원</v-list-item-content>
+                                                            </v-list-item>
+                                                            <v-list-item>
+                                                                <v-list-item-content>농어촌특별세</v-list-item-content>
+                                                                <v-list-item-content>{{ccalc_result.cresult.nong_eo_chon_special_tax}}원</v-list-item-content>
+                                                            </v-list-item>
+                                                            <v-list-item>
+                                                                <v-list-item-content>지방교육세</v-list-item-content>
+                                                                <v-list-item-content>{{ccalc_result.cresult.jibang_education_tax}}원</v-list-item-content>
+                                                            </v-list-item>
+                                                            <v-list-item>
+                                                                <v-list-item-content style="color: #0085FF">세액합계액</v-list-item-content>
+                                                                <v-list-item-content style="color: #0085FF">{{ccalc_result.cresult.total_tax}}원</v-list-item-content>
+                                                            </v-list-item>
+                                                        </v-list>
+                                                    </v-container>
+                                                    <v-divider></v-divider>
+                                                    <v-container v-if="ccalc_result.cwhich === 'fee-registration'">
+                                                        <v-list>
+                                                            <v-list-item>
+                                                                <v-list-item-content>인지대</v-list-item-content>
+                                                                <v-list-item-content>{{ccalc_result.cresult.inji_tax}}원</v-list-item-content>
+                                                            </v-list-item>
+                                                            <v-list-item>
+                                                                <v-list-item-content>증지대</v-list-item-content>
+                                                                <v-list-item-content>{{ccalc_result.cresult.jeungji_tax}}원</v-list-item-content>
+                                                            </v-list-item>
+                                                            <v-list-item>
+                                                                <v-list-item-content>채권할인(변동큼)<br>할인률 4% 기준</v-list-item-content>
+                                                                    <v-list-item-content>{{ccalc_result.cresult.bond_discount}}원</v-list-item-content>
+                                                                </v-list-item>
+                                                            </v-list>
+                                                        </v-container>
+                                                        <v-divider></v-divider>
+                                                        <v-container v-if="ccalc_result.cwhich === 'fee-registration'">
+                                                            <v-list>
+                                                                <v-list-item>
+                                                                    <v-list-item-content>법무 기본보수</v-list-item-content>
+                                                                    <v-list-item-content>{{ccalc_result.cresult.lawyer_fee}}원</v-list-item-content>
+                                                                </v-list-item>
+                                                                <v-list-item>
+                                                                    <v-list-item-content>부가세</v-list-item-content>
+                                                                    <v-list-item-content>{{ccalc_result.cresult.lawyer_fee_tax}}원</v-list-item-content>
+                                                                </v-list-item>
+                                                                <v-list-item>
+                                                                    <v-list-item-content>대행비</v-list-item-content>
+                                                                    <v-list-item-content>{{ccalc_result.cresult.dehang}}원</v-list-item-content>
+                                                                </v-list-item>
+                                                                <v-list-item>
+                                                                    <v-list-item-content>등록세</v-list-item-content>
+                                                                    <v-list-item-content>{{ccalc_result.cresult.deungrocse}}원</v-list-item-content>
+                                                                </v-list-item>
+                                                                <v-list-item>
+                                                                    <v-list-item-content>일당</v-list-item-content>
+                                                                    <v-list-item-content>{{ccalc_result.cresult.ildang}}원</v-list-item-content>
+                                                                </v-list-item>
+                                                            </v-list>
+                                                        </v-container>
+                                                        <v-divider></v-divider>
+                                                        <v-container v-if="ccalc_result.cwhich === 'fee-registration'">
+                                                            <v-list>
+                                                                <v-list-item>
+                                                                    <v-list-item-content style="color: #0085FF">총 비용</v-list-item-content>
+                                                                    <v-list-item-content style="color: #0085FF">{{ccalc_result.cresult.total_price}}원</v-list-item-content>
+                                                                </v-list-item>
+                                                            </v-list>
+                                                        </v-container>
 
-                                </v-flex>
-                            </v-layout>
-                        </template>
-                        <script>
-                            import axios from "axios"
-                            export default {
-                                name: 'chwideug',
-                                data() {
-                                    return {
-                                        asset_type: 'house',
-                                        kind: 'meme',
-                                        area: 'small',
-                                        farm_type: 'new',
-                                        dialog: false,
-                                        price: null,
-                                    }
-                                },
-                                methods: {
-                                    chwiTest() {
-                                        axios
-                                            .post(
-                                                "https://www.ddhouse.co.kr/api/v1/public/calculator/fee-registration",
-                                                {
-                                                    asset_type: this.asset_type,
-                                                    kind: this.kind,
-                                                    area: this.area,
-                                                    farm_type: this.farm_type,
-                                                    price: this.price
-                                                }
-                                            )
-                                            .then(res => {
-                                                console.log(res);
-                                            })
-                                            .catch(err => {
-                                                console.log(err);
-                                            });
+                                                    </v-card>
+                                                </v-dialog>
+
+                                            </v-list-item-content>
+                                        </v-list-item>
+
+                                    </v-flex>
+                                </v-layout>
+                            </template>
+                            <script>
+                                import axios from "axios"
+                                export default {
+                                    name: 'chwideug',
+                                    data() {
+                                        return {
+                                            asset_type: 'house',
+                                            kind: 'meme',
+                                            area: 'small',
+                                            farm_type: 'new',
+                                            dialog: false,
+                                            dialog2: false,
+                                            price: null,
+                                            ccalc_result: {
+                                                cwhich: '',
+                                                cresult: null
+                                            },
+                                            inserted_price: '',
+
+                                            chui_deuk_tax: '',
+                                            nong_eo_chon_special_tax: '',
+                                            jibang_education_tax: '',
+                                            total_tax: '',
+                                            inji_tax: '',
+                                            jeungji_tax: '',
+                                            bond_discount: '',
+                                            lawyer_fee: '',
+                                            lawyer_fee_tax: '',
+                                            dehang: '',
+                                            deungrocse: '',
+                                            ildang: '',
+                                            total_price: ''
+                                        }
+                                    },
+                                    methods: {
+                                        chwiTest() {
+                                            axios
+                                                .post(
+                                                    "https://www.ddhouse.co.kr/api/v1/public/calculator/fee-registration",
+                                                    {
+                                                        asset_type: this.asset_type,
+                                                        kind: this.kind,
+                                                        area: this.area,
+                                                        farm_type: this.farm_type,
+                                                        price: this.price
+                                                    }
+                                                )
+                                                .then(res => {
+                                                    console.log(res);
+                                                    this.ccalc_result.cwhich = 'fee-registration'
+                                                    this.ccalc_result.cresult = res
+                                                        .data
+                                                        console
+                                                        .log(this.ccalc_result)
+                                                })
+                                                .catch(err => {
+                                                    console.log(err);
+                                                });
+                                        }
                                     }
                                 }
-                            }
-                        </script>
+                            </script>
 
-                        <style scoped="scoped">
-                            .being {
-                                display: flex;
-                                justify-content: center;
-                            }
-                        </style>
+                            <style scoped="scoped">
+                                .being {
+                                    display: flex;
+                                    justify-content: center;
+                                }
+                            </style>

@@ -7,7 +7,9 @@
                 hide-overlay="hide-overlay"
                 transition="dialog-bottom-transition">
                 <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark="dark" v-on="on">Open Dialog</v-btn>
+                    <div class="being">
+                        <v-btn @click="joongTest" max-width="80%" min-width="80%" color="#2D9527" dark="dark" v-on="on">계산하기</v-btn>
+                    </div>
                 </template>
                 <v-card>
                     <v-toolbar dark="dark" color="#2D9527">
@@ -68,7 +70,7 @@
     export default {
         name: 'resul',
         data() {
-            return {sheet: false, dialog: false, notifications: false, sound: true, widgets: false}
+            return {sheet: false, dialog: false,}
         }
     }
 </script>
