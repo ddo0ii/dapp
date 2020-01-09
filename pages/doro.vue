@@ -1,30 +1,53 @@
+<!-- http 가이드 -- http://postcode.map.daum.net/guide https 가이드 --
+https://spi.maps.daum.net/postcode/guidessl -->
 <template>
     <v-layout column="column" row="row">
         <v-flex wrap="wrap">
-            <v-list-item>
-                <v-list-item-content>
-                    <v-text-field class="caption" placeholder="지번, 건물명, 도로명 입력"></v-text-field>
-                </v-list-item-content>
-            </v-list-item>
-
-            <div class="being">
-                <v-btn
-                    max-width="80%"
-                    min-width="80%"
-                    color="#2D9527"
-                    dark="dark">검색하기</v-btn>
+            <div id="app">
+                <DaumPostcode :on-complete="handleAddress"/>
             </div>
         </v-flex>
     </v-layout>
 
 </template>
+
 <script>
-    import axios from "axios"
+    import DaumPostcode from 'vuejs-daum-postcode'
+
+    var handleAddress = (data) => {
+        let fullAddress = data.address
+        let extraAddress = ''
+        if (data.addressType === 'R') {
+            if (data.bname !== '') {
+                extraAddress += data.bname
+            }
+            if (data.buildingName !== '') {
+                extraAddress += (
+                    extraAddress !== ''
+                        ? `, ${data.buildingName}`
+                        : data.buildingName
+                )
+            }
+            fullAddress += (
+                extraAddress !== ''
+                    ? ` (${extraAddress})`
+                    : ''
+            )
+        }
+
+        console.log(fullAddress) // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    }
     export default {
         data() {
-            name: 'doro'
+            name : 'doro'
             return {}
         },
+        components: {
+            DaumPostcode
+        },
+        methods: {
+            handleAddress
+        }
     }
 </script>
 

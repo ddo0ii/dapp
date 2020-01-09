@@ -12,9 +12,20 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.9.2",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "vuejs-daum-postcode": "^1.0.4"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0"
-  }
+  },
+  "main": "nuxt.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soyhandong/dapp.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soyhandong/dapp/issues"
+  },
+  "homepage": "https://github.com/soyhandong/dapp#readme"
 }

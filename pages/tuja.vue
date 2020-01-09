@@ -201,17 +201,6 @@
                             twhich: '',
                             tresult: null
                         },
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-
                         str_purchasePrice: '',
                         str_investPrice: '',
                         str_deposit: '',
