@@ -38,6 +38,7 @@
                     color="black accent-4"
                     center-active="center-active"
                     >
+                    <v-tab to="/">Welcome</v-tab>
                     <v-tab to="/yangdo">양도소득세</v-tab>
                     <v-tab to="/chwideug">취득세</v-tab>
                     <v-tab to="/tuja">투자수익률</v-tab>
