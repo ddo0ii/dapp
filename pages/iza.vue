@@ -87,15 +87,15 @@
                                 <v-list>
                                     <v-list-item>
                                         <v-list-item-content class="font-weight-bold">대출원금</v-list-item-content>
-                                        <v-list-item-content>{{price}}원</v-list-item-content>
+                                        <v-list-item-content>{{price*10000}}원</v-list-item-content>
                                     </v-list-item>
                                     <v-list-item>
                                         <v-list-item-content class="font-weight-bold">총대출이자</v-list-item-content>
-                                        <v-list-item-content>{{icalc_result.iresult.total_interest}}</v-list-item-content>
+                                        <v-list-item-content>{{icalc_result.iresult.total_interest}}원</v-list-item-content>
                                     </v-list-item>
                                     <v-list-item>
                                         <v-list-item-content class="font-weight-bold">총상환금액</v-list-item-content>
-                                        <v-list-item-content>{{icalc_result.iresult.total_interest}}</v-list-item-content>
+                                        <v-list-item-content>{{icalc_result.iresult.total_interest+price*10000}}원</v-list-item-content>
                                     </v-list-item>
                                 </v-list>
                             </v-container>
@@ -174,7 +174,8 @@
                     iwhich: '',
                     iresult: null
                 },
-                list: []
+                list: [],
+                origin: '',
             }
         },
         methods: {

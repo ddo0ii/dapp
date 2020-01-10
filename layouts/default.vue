@@ -43,7 +43,9 @@
 </template>
 
 <script>
+
     export default {
+
         data() {
             return {
                 title: 'DDhouseCal',
@@ -90,7 +92,7 @@
                     }
                 ],
                 miniVariant: false,
-                right: true,
+                right: true
             }
         }
     }
