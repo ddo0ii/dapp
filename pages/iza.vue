@@ -1,5 +1,7 @@
 <template>
     <v-layout column="column" row="row">
+    
+
         <v-flex wrap="wrap">
             <v-list-item>
                 <v-list-item-content>
@@ -122,25 +124,6 @@
                                     </tbody>
 
                                 </table>
-
-                                <!-- <v-list> <v-list-item> <v-list-item-content class="caption
-                                font-weight-bold">회차</v-list-item-content> <v-list-item-content class="caption
-                                font-weight-bold">납임원금</v-list-item-content> <v-list-item-content class="caption
-                                font-weight-bold">대출이자</v-list-item-content> <v-list-item-content class="caption
-                                font-weight-bold">월상환금</v-list-item-content> <v-list-item-content class="caption
-                                font-weight-bold">대출잔금</v-list-item-content> </v-list-item> <v-list-item
-                                v-for="(listed, i) in list" :key="i"> <v-list-item-content
-                                class="caption">{{icalc_result.iresult.listed.index}}</v-list-item-content>
-                                <v-list-item-content
-                                class="caption">{{icalc_result.iresult.listed.originRepay}}</v-list-item-content>
-                                <v-list-item-content
-                                class="caption">{{icalc_result.iresult.listed.interestRepay}}</v-list-item-content>
-                                <v-list-item-content
-                                class="caption">{{icalc_result.iresult.listed.totalRepay}}</v-list-item-content>
-                                <v-list-item-content
-                                class="caption">{{icalc_result.iresult.listed.remainAmount}}</v-list-item-content>
-                                </v-list-item> </v-list> -->
-
                             </v-container>
 
                         </v-card>
@@ -175,7 +158,6 @@
                     iresult: null
                 },
                 list: [],
-                origin: '',
             }
         },
         methods: {

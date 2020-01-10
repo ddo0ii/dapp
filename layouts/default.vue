@@ -31,8 +31,27 @@
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
             <v-toolbar-title>ddgye</v-toolbar-title>
             <v-spacer/>
+
+            <template v-slot:extension>
+                <v-tabs
+                    background-color="white"
+                    color="black accent-4"
+                    center-active="center-active"
+                    >
+                    <v-tab to="/yangdo">양도소득세</v-tab>
+                    <v-tab to="/chwideug">취득세</v-tab>
+                    <v-tab to="/tuja">투자수익률</v-tab>
+                    <v-tab to="/jeungyeo">증여세</v-tab>
+                    <v-tab to="/joonggae">중개보수료</v-tab>
+                    <v-tab to="/doro">도로명주소</v-tab>
+                    <v-tab to="/pyeongsu">평수환산</v-tab>
+                    <v-tab to="/iza">이자계산</v-tab>
+                </v-tabs>
+            </template>
         </v-app-bar>
+
         <div class="wcolor">
+
             <v-content>
                 <v-container>
                     <nuxt/>
