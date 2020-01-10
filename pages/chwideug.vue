@@ -1,5 +1,16 @@
 <template>
     <v-layout column="column" row="row">
+        <v-tabs background-color="white" color="#2D9527" center-active="center-active">
+            <v-tab to="/yangdo">양도소득세</v-tab>
+            <v-tab class="font-weight-black" to="/chwideug">취득세</v-tab>
+            <v-tab to="/tuja">투자수익률</v-tab>
+            <v-tab to="/jeungyeo">증여세</v-tab>
+            <v-tab to="/joonggae">중개보수료</v-tab>
+            <v-tab to="/doro">도로명주소</v-tab>
+            <v-tab to="/pyeongsu">평수환산</v-tab>
+            <v-tab to="/iza">이자계산</v-tab>
+        </v-tabs>
+        <v-divider></v-divider>
         <v-flex wrap="wrap">
             <v-dialog v-model="dialog2" width="600px">
                 <template v-slot:activator="{ on }">
@@ -93,7 +104,6 @@
                                             </v-list-item-content>
                                         </v-list-item>
                                     </div>
-
                                     <div v-if="(asset_type==='farm')&&(kind==='meme')">
                                         <v-list-item>
                                             <v-list-item-content>
@@ -152,7 +162,6 @@
                                                         </v-btn>
                                                         <v-toolbar-title>계산 결과</v-toolbar-title>
                                                     </v-toolbar>
-
                                                     <v-container v-if="ccalc_result.cwhich === 'fee-registration'">
                                                         <v-list>
                                                             <v-list-item>
@@ -224,13 +233,10 @@
                                                                 </v-list-item>
                                                             </v-list>
                                                         </v-container>
-
                                                     </v-card>
                                                 </v-dialog>
-
                                             </v-list-item-content>
                                         </v-list-item>
-
                                     </v-flex>
                                 </v-layout>
                             </template>

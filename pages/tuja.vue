@@ -1,5 +1,16 @@
 <template>
     <v-layout column="column" row="row">
+        <v-tabs background-color="white" color="#2D9527" center-active="center-active">
+            <v-tab to="/yangdo">양도소득세</v-tab>
+            <v-tab to="/chwideug">취득세</v-tab>
+            <v-tab class="font-weight-black" to="/tuja">투자수익률</v-tab>
+            <v-tab to="/jeungyeo">증여세</v-tab>
+            <v-tab to="/joonggae">중개보수료</v-tab>
+            <v-tab to="/doro">도로명주소</v-tab>
+            <v-tab to="/pyeongsu">평수환산</v-tab>
+            <v-tab to="/iza">이자계산</v-tab>
+        </v-tabs>
+        <v-divider></v-divider>
         <v-flex wrap="wrap">
             <v-col cols="11">
                 <v-row justify="end">
@@ -88,7 +99,6 @@
                         <v-text-field class="caption" v-model="rate" placeholder="이자율" suffix="(연 %)"></v-text-field>
                     </v-col>
                 </v-row>
-
                 <v-dialog
                     v-model="dialog"
                     fullscreen="fullscreen"
@@ -112,7 +122,6 @@
                             </v-btn>
                             <v-toolbar-title>계산 결과</v-toolbar-title>
                         </v-toolbar>
-
                         <v-container v-if="tcalc_result.twhich === 'income'">
                             <v-list>
                                 <v-list-item>
@@ -144,107 +153,104 @@
                                     <v-list-item-content style="color: #0085FF">비용</v-list-item-content>
                                     <v-list-item-content style="color: #0085FF">{{tcalc_result.tresult.str_cost}}원</v-list-item-content>
                                 </v-list-item>
-                                </v-list>
-                            </v-container>
-                            <v-divider></v-divider>
-                            <v-container v-if="tcalc_result.twhich === 'income'">
-                                <v-list>
-                                    <v-list-item>
-                                        <v-list-item-content>월세</v-list-item-content>
-                                        <v-list-item-content>{{tcalc_result.tresult.str_monthlyRent}}원</v-list-item-content>
-                                    </v-list-item>
-                                    <v-list-item>
-                                        <v-list-item-content>12(1년분)</v-list-item-content>
-                                        <v-list-item-content></v-list-item-content>
-                                    </v-list-item>
+                            </v-list>
+                        </v-container>
+                        <v-divider></v-divider>
+                        <v-container v-if="tcalc_result.twhich === 'income'">
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-content>월세</v-list-item-content>
+                                    <v-list-item-content>{{tcalc_result.tresult.str_monthlyRent}}원</v-list-item-content>
+                                </v-list-item>
+                                <v-list-item>
+                                    <v-list-item-content>12(1년분)</v-list-item-content>
+                                    <v-list-item-content></v-list-item-content>
+                                </v-list-item>
                                 <v-list-item>
                                     <v-list-item-content style="color: #0085FF">수익</v-list-item-content>
                                     <v-list-item-content style="color: #0085FF">{{tcalc_result.tresult.str_gain}}원</v-list-item-content>
                                 </v-list-item>
-                                </v-list>
-                            </v-container>
-                            <v-divider></v-divider>
-                            <v-container v-if="tcalc_result.twhich === 'income'">
-                                <v-list>
-                                    <v-list-item>
-                                        <v-list-item-content style="color: #0085FF">순수익(1년분)</v-list-item-content>
-                                        <v-list-item-content style="color: #0085FF">{{tcalc_result.tresult.str_pureGain}}원</v-list-item-content>
-                                    </v-list-item>
-                                    <v-list-item>
-                                        <v-list-item-content class="font-weight-bold" style="color: #0085FF">투자수익률</v-list-item-content>
-                                        <v-list-item-content class="font-weight-bold" style="color: #0085FF">{{tcalc_result.tresult.str_investmentProfitRate}}%</v-list-item-content>
-                                    </v-list-item>
-                                </v-list>
-                            </v-container>
-
-                        </v-card>
-                    </v-dialog>
-
-                </v-flex>
-            </v-layout>
-
-        </template>
-        <script>
-            import axios from "axios"
-            export default {
-                name: 'tuja',
-                data() {
-                    return {
-                        dialog: false,
-                        dialog2: false,
-                        price_m: null,
-                        price_invest: null,
-                        price_wbo: null,
-                        price_w: null,
-                        rate: null,
-                        tcalc_result: {
-                            twhich: '',
-                            tresult: null
-                        },
-                        str_purchasePrice: '',
-                        str_investPrice: '',
-                        str_deposit: '',
-                        str_requestedLoan: '',
-                        str_yearlyInterest: '',
-                        str_cost: '',
-                        str_monthlyRent: '',
-                        str_gain: '',
-                        str_pureGain: '',
-                        str_investmentProfitRate: '',
-                    }
-                },
-                methods: {
-                    tuTest() {
-                        axios
-                            .post("https://www.ddhouse.co.kr/api/v1/public/calculator/income", {
-                                price_m: this.price_m,
-                                price_invest: this.price_invest,
-                                price_wbo: this.price_wbo,
-                                price_w: this.price_w,
-                                rate: this.rate
-                            })
-                            .then(res => {
-                                console.log(res);
-                                this.tcalc_result.twhich = 'income'
-                                this.tcalc_result.tresult = res
-                                    .data
-                                    console
-                                    .log(this.tcalc_result)
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
-                    }
+                            </v-list>
+                        </v-container>
+                        <v-divider></v-divider>
+                        <v-container v-if="tcalc_result.twhich === 'income'">
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-content style="color: #0085FF">순수익(1년분)</v-list-item-content>
+                                    <v-list-item-content style="color: #0085FF">{{tcalc_result.tresult.str_pureGain}}원</v-list-item-content>
+                                </v-list-item>
+                                <v-list-item>
+                                    <v-list-item-content class="font-weight-bold" style="color: #0085FF">투자수익률</v-list-item-content>
+                                    <v-list-item-content class="font-weight-bold" style="color: #0085FF">{{tcalc_result.tresult.str_investmentProfitRate}}%</v-list-item-content>
+                                </v-list-item>
+                            </v-list>
+                        </v-container>
+                    </v-card>
+                </v-dialog>
+            </v-flex>
+        </v-layout>
+    </template>
+    <script>
+        import axios from "axios"
+        export default {
+            name: 'tuja',
+            data() {
+                return {
+                    dialog: false,
+                    dialog2: false,
+                    price_m: null,
+                    price_invest: null,
+                    price_wbo: null,
+                    price_w: null,
+                    rate: null,
+                    tcalc_result: {
+                        twhich: '',
+                        tresult: null
+                    },
+                    str_purchasePrice: '',
+                    str_investPrice: '',
+                    str_deposit: '',
+                    str_requestedLoan: '',
+                    str_yearlyInterest: '',
+                    str_cost: '',
+                    str_monthlyRent: '',
+                    str_gain: '',
+                    str_pureGain: '',
+                    str_investmentProfitRate: ''
+                }
+            },
+            methods: {
+                tuTest() {
+                    axios
+                        .post("https://www.ddhouse.co.kr/api/v1/public/calculator/income", {
+                            price_m: this.price_m,
+                            price_invest: this.price_invest,
+                            price_wbo: this.price_wbo,
+                            price_w: this.price_w,
+                            rate: this.rate
+                        })
+                        .then(res => {
+                            console.log(res);
+                            this.tcalc_result.twhich = 'income'
+                            this.tcalc_result.tresult = res
+                                .data
+                                console
+                                .log(this.tcalc_result)
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
                 }
             }
-        </script>
+        }
+    </script>
 
-        <style scoped="scoped">
-            .btn {
-                border: rgb(220, 226, 233);
-            }
-            .being {
-                display: flex;
-                justify-content: center;
-            }
-        </style>
+    <style scoped="scoped">
+        .btn {
+            border: rgb(220, 226, 233);
+        }
+        .being {
+            display: flex;
+            justify-content: center;
+        }
+    </style>

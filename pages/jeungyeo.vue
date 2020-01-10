@@ -1,5 +1,16 @@
 <template>
     <v-layout column="column" row="row">
+        <v-tabs background-color="white" color="#2D9527" center-active="center-active">
+            <v-tab to="/yangdo">양도소득세</v-tab>
+            <v-tab to="/chwideug">취득세</v-tab>
+            <v-tab to="/tuja">투자수익률</v-tab>
+            <v-tab class="font-weight-black" to="/jeungyeo">증여세</v-tab>
+            <v-tab to="/joonggae">중개보수료</v-tab>
+            <v-tab to="/doro">도로명주소</v-tab>
+            <v-tab to="/pyeongsu">평수환산</v-tab>
+            <v-tab to="/iza">이자계산</v-tab>
+        </v-tabs>
+        <v-divider></v-divider>
         <v-flex wrap="wrap">
             <v-dialog v-model="dialog2" width="600px">
                 <template v-slot:activator="{ on }">
@@ -35,7 +46,6 @@
                                                                 의미 - 조상으로부터 직선으로 계속하여 자기에 이르기까지의 혈족<br>
                                                                     예시 - 조,모,양부,양모,조부,조모,증조부,증조모,고조부,고조모,외조부,외조모,계부,계모,외증조부,외증조모,외고조부,외고조모<br>
                                                                         <br>
-
                                                                             * 기타친족<br>
                                                                                 의미 - 6촌이내의 혈족 및 4촌이내의 인척<br>
                                                                                     예시 -
@@ -84,7 +94,6 @@
                                                                                     </v-btn-toggle>
                                                                                 </v-list-item-content>
                                                                             </v-list-item>
-
                                                                             <v-list-item>
                                                                                 <v-list-item-content>
                                                                                     <p class="font-weight-black">수증자 - 증여자 관계 구분</p>
@@ -109,7 +118,6 @@
                                                                                 <v-col cols="7">
                                                                                     <v-text-field class="caption" v-model="price" placeholder="증여금액 입력" suffix="만원"></v-text-field>
                                                                                 </v-col>
-
                                                                                 <v-dialog
                                                                                     v-model="dialog"
                                                                                     fullscreen="fullscreen"
@@ -133,7 +141,6 @@
                                                                                             </v-btn>
                                                                                             <v-toolbar-title>계산 결과</v-toolbar-title>
                                                                                         </v-toolbar>
-
                                                                                         <v-container v-if="jcalc_result.jwhich === 'tax-gift'">
                                                                                             <v-list>
                                                                                                 <v-list-item>
@@ -180,18 +187,14 @@
                                                                                                 </v-list-item>
                                                                                             </v-list>
                                                                                         </v-container>
-
                                                                                     </v-card>
                                                                                 </v-dialog>
-
                                                                             </v-list-item-content>
                                                                         </v-list-item>
-
                                                                     </v-flex>
                                                                 </v-layout>
                                                             </template>
                                                             <script>
-
                                                                 import axios from "axios"
                                                                 export default {
                                                                     name: 'jeungyeo',
@@ -207,10 +210,8 @@
                                                                                 jwhich: '',
                                                                                 jresult: null
                                                                             },
-
                                                                             extraChargeAppliedPrice: '',
                                                                             skippingGenerationTax: '',
-
                                                                             giftPrice: '',
                                                                             deductedPrice: '',
                                                                             taxStandard: '',
@@ -245,7 +246,6 @@
                                                                     }
                                                                 }
                                                             </script>
-
                                                             <style scoped="scoped">
                                                                 .being {
                                                                     display: flex;

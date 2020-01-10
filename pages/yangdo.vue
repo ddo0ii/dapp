@@ -1,5 +1,16 @@
 <template>
     <v-layout column="column" row="row">
+        <v-tabs background-color="white" color="#2D9527" center-active="center-active">
+            <v-tab class="font-weight-black" to="/yangdo">양도소득세</v-tab>
+            <v-tab to="/chwideug">취득세</v-tab>
+            <v-tab to="/tuja">투자수익률</v-tab>
+            <v-tab to="/jeungyeo">증여세</v-tab>
+            <v-tab to="/joonggae">중개보수료</v-tab>
+            <v-tab to="/doro">도로명주소</v-tab>
+            <v-tab to="/pyeongsu">평수환산</v-tab>
+            <v-tab to="/iza">이자계산</v-tab>
+        </v-tabs>
+        <v-divider></v-divider>
         <v-flex wrap="wrap">
             <v-dialog v-model="dialog2" width="600px">
                 <template v-slot:activator="{ on }">
@@ -45,7 +56,6 @@
                     </v-btn-toggle>
                 </v-list-item-content>
             </v-list-item>
-
             <div v-if="registration==='yes'">
                 <v-list-item>
                     <v-list-item-content>
@@ -67,7 +77,6 @@
                         </v-btn-toggle>
                     </v-list-item-content>
                 </v-list-item>
-
                 <div v-if="asset_type==='house'">
                     <v-list-item>
                         <v-list-item-content>
@@ -86,7 +95,6 @@
                     </v-list-item>
                 </div>
             </div>
-
             <v-list-item>
                 <v-list-item-content>
                     <p class="font-weight-black">금액</p>
@@ -116,7 +124,6 @@
                             placeholder="양도가액"
                             suffix="만원"></v-text-field>
                     </v-col>
-
                     <v-col cols="6">
                         <v-menu
                             ref="menu2"
@@ -143,7 +150,6 @@
                             placeholder="취득가액"
                             suffix="만원"></v-text-field>
                     </v-col>
-
                     <v-col cols="4">
                         <v-subheader class="caption" color="green darken-4">소요경비</v-subheader>
                     </v-col>
@@ -154,8 +160,7 @@
                             placeholder="소요경비 입력"
                             suffix="만원"></v-text-field>
                     </v-col>
-
-                   <v-dialog
+                    <v-dialog
                         v-model="dialog"
                         fullscreen="fullscreen"
                         hide-overlay="hide-overlay"
@@ -178,7 +183,6 @@
                                 </v-btn>
                                 <v-toolbar-title>계산 결과</v-toolbar-title>
                             </v-toolbar>
-
                             <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
                                 <v-list>
                                     <v-list-item>
@@ -206,175 +210,174 @@
                                     <v-list-item>
                                         <v-list-item-content>장기보유특별공제</v-list-item-content>
                                         <v-list-item-content>{{ycalc_result.yresult.longTermDeduction}}원</v-list-item-content>
-                                    </v-list-item>                                    
+                                    </v-list-item>
                                     <v-list-item>
                                         <v-list-item-content style="color: #0085FF">양도소득 금액</v-list-item-content>
                                         <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.yangdoIncomePrice}}원</v-list-item-content>
                                     </v-list-item>
                                     <v-list-item>
                                         <v-list-item-content>양도소득 기본공제<br>(연간 250만원 한도)</v-list-item-content>
-                                        <v-list-item-content>{{ycalc_result.yresult.yangdoBasicDeduction}}원</v-list-item-content>
-                                    </v-list-item>
-                                    <v-list-item>
-                                        <v-list-item-content style="color: #0085FF">과세표준</v-list-item-content>
-                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.taxStandard}}원</v-list-item-content>
-                                    </v-list-item>
-                                </v-list>
-                            </v-container>
-                            <v-divider></v-divider>
-                            <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
-                                <v-list>
-                                    <v-list-item>
-                                        <v-list-item-content>세율</v-list-item-content>
-                                        <v-list-item-content>{{ycalc_result.yresult.taxRatio}}%</v-list-item-content>
-                                    </v-list-item>                                    
-                                    <v-list-item>
-                                        <v-list-item-content style="color: #0085FF">세율 적용값</v-list-item-content>
-                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.taxRatioApplied}}원</v-list-item-content>
-                                    </v-list-item>
-                                    <v-list-item>
-                                        <v-list-item-content>누진공제액</v-list-item-content>
-                                        <v-list-item-content>{{ycalc_result.yresult.graduallyAdvancedDeduction}}원</v-list-item-content>
-                                    </v-list-item>
-                                    <v-list-item>
-                                        <v-list-item-content style="color: #0085FF">양도소득세</v-list-item-content>
-                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.yangdoIncomeTax}}원</v-list-item-content>
-                                    </v-list-item>
-                                </v-list>
-                            </v-container>
-                            <v-divider></v-divider>
-                            <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
-                                <v-list>
-                                    <v-list-item>
-                                        <v-list-item-content>지방소득세(주민세)</v-list-item-content>
-                                        <v-list-item-content>{{ycalc_result.yresult.jibangIncomeTax}}원</v-list-item-content>
-                                    </v-list-item>                                    
-                                    <v-list-item>
-                                        <v-list-item-content style="color: #0085FF">총 비용</v-list-item-content>
-                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.totalPrice}}원</v-list-item-content>
-                                    </v-list-item>
-                                </v-list>
-                            </v-container>
+                                            <v-list-item-content>{{ycalc_result.yresult.yangdoBasicDeduction}}원</v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item>
+                                            <v-list-item-content style="color: #0085FF">과세표준</v-list-item-content>
+                                            <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.taxStandard}}원</v-list-item-content>
+                                        </v-list-item>
+                                    </v-list>
+                                </v-container>
+                                <v-divider></v-divider>
+                                <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
+                                    <v-list>
+                                        <v-list-item>
+                                            <v-list-item-content>세율</v-list-item-content>
+                                            <v-list-item-content>{{ycalc_result.yresult.taxRatio}}%</v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item>
+                                            <v-list-item-content style="color: #0085FF">세율 적용값</v-list-item-content>
+                                            <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.taxRatioApplied}}원</v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item>
+                                            <v-list-item-content>누진공제액</v-list-item-content>
+                                            <v-list-item-content>{{ycalc_result.yresult.graduallyAdvancedDeduction}}원</v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item>
+                                            <v-list-item-content style="color: #0085FF">양도소득세</v-list-item-content>
+                                            <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.yangdoIncomeTax}}원</v-list-item-content>
+                                        </v-list-item>
+                                    </v-list>
+                                </v-container>
+                                <v-divider></v-divider>
+                                <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
+                                    <v-list>
+                                        <v-list-item>
+                                            <v-list-item-content>지방소득세(주민세)</v-list-item-content>
+                                            <v-list-item-content>{{ycalc_result.yresult.jibangIncomeTax}}원</v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item>
+                                            <v-list-item-content style="color: #0085FF">총 비용</v-list-item-content>
+                                            <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.totalPrice}}원</v-list-item-content>
+                                        </v-list-item>
+                                    </v-list>
+                                </v-container>
+                            </v-card>
+                        </v-dialog>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-flex>
+        </v-layout>
+    </template>
+    <script>
+        import axios from "axios"
+        export default {
+            name: 'yangdo',
+            data: vm => ({
+                date: new Date()
+                    .toISOString()
+                    .substr(0, 10),
+                date_buy: vm.formatDate(new Date().toISOString().substr(0, 10)),
+                menu: false
+            }),
+            data: vm2 => ({
+                date2: new Date()
+                    .toISOString()
+                    .substr(0, 10),
+                date_transfer: vm2.formatDate2(new Date().toISOString().substr(0, 10)),
+                menu2: false
+            }),
+            data() {
+                return {
+                    text: 'text',
+                    registration: 'yes',
+                    asset_type: 'house',
+                    house_count: 'one',
+                    modal: false,
+                    menu: false,
+                    menu2: false,
+                    dialog: false,
+                    dialog2: false,
+                    hidden: false,
+                    date: '',
+                    date2: '',
+                    date_buy: '',
+                    price_buy: '',
+                    date_transfer: '',
+                    price_transfer: '',
+                    price_etc: '',
+                    ycalc_result: {
+                        ywhich: '',
+                        yresult: null
+                    },
+                    possessPeriod: '',
+                    yangdoGainsDeducted: '',
 
-                        </v-card>
-                    </v-dialog>
-                </v-list-item-content>
-            </v-list-item>
-
-        </v-flex>
-    </v-layout>
-</template>
-<script>
-    import axios from "axios"
-    export default {
-        name: 'yangdo',
-        data: vm => ({
-            date: new Date()
-                .toISOString()
-                .substr(0, 10),
-            date_buy: vm.formatDate(new Date().toISOString().substr(0, 10)),
-            menu: false
-        }),
-        data: vm2 => ({
-            date2: new Date()
-                .toISOString()
-                .substr(0, 10),
-            date_transfer: vm2.formatDate2(new Date().toISOString().substr(0, 10)),
-            menu2: false
-        }),
-        data() {
-            return {
-                text: 'text',
-                registration: 'yes',
-                asset_type: 'house',
-                house_count: 'one',
-                modal: false,
-                menu: false,
-                menu2: false,
-                dialog: false,
-                dialog2: false,
-                hidden: false,
-                date: '',
-                date2: '',
-                date_buy: '',
-                price_buy: '',
-                date_transfer: '',
-                price_transfer: '',
-                price_etc: '',
-                ycalc_result: {
-                    ywhich: '',
-                    yresult: null
-                },                
-                possessPeriod: '',              
-                yangdoGainsDeducted: '',
-                
-                yangdoPrice: '',
-                chuiDeukPrice: '',
-                cost: '',
-                yangdoGains: '',
-                longTermDeduction: '',
-                yangdoIncomePrice: '',
-                yangdoBasicDeduction: '',
-                taxStandard: '',
-                taxRatio: '',
-                taxRatioApplied: '',
-                graduallyAdvancedDeduction: '',
-                yangdoIncomeTax: '',
-                jibangIncomeTax: '',
-                totalPrice: '',
+                    yangdoPrice: '',
+                    chuiDeukPrice: '',
+                    cost: '',
+                    yangdoGains: '',
+                    longTermDeduction: '',
+                    yangdoIncomePrice: '',
+                    yangdoBasicDeduction: '',
+                    taxStandard: '',
+                    taxRatio: '',
+                    taxRatioApplied: '',
+                    graduallyAdvancedDeduction: '',
+                    yangdoIncomeTax: '',
+                    jibangIncomeTax: '',
+                    totalPrice: ''
+                }
+            },
+            watch: {
+                date(val) {
+                    this.date_buy = this.formatDate(this.date)
+                },
+                date2(val) {
+                    this.date_transfer = this.formatDate(this.date2)
+                }
+            },
+            methods: {
+                formatDate(date) {
+                    if (!date) 
+                        return null
+                    const [year, month, day] = date.split('-')
+                    return `${year}${month}${day}`
+                },
+                formatDate2(date2) {
+                    if (!date2) 
+                        return null
+                    const [year, month, day] = date2.split('-')
+                    return `${year}${month}${day}`
+                },
+                yangTest() {
+                    axios
+                        .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-transfer", {
+                            registration: this.registration,
+                            asset_type: this.asset_type,
+                            house_count: this.house_count,
+                            date_buy: this.date_buy,
+                            price_buy: this.price_buy,
+                            date_transfer: this.date_transfer,
+                            price_transfer: this.price_transfer,
+                            price_etc: this.price_etc
+                        })
+                        .then(res => {
+                            console.log(res);
+                            this.ycalc_result.ywhich = 'tax-transfer'
+                            this.ycalc_result.yresult = res
+                                .data
+                                console
+                                .log(this.ycalc_result)
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
             }
-        },
-        watch: {
-            date(val) {
-                this.date_buy = this.formatDate(this.date)
-            },
-            date2(val) {
-                this.date_transfer = this.formatDate(this.date2)
-            }
-        },
-        methods: {
-            formatDate(date) {
-                if (!date) 
-                    return null
-                const [year, month, day] = date.split('-')
-                return `${year}${month}${day}`
-            },
-            formatDate2(date2) {
-                if (!date2) 
-                    return null
-                const [year, month, day] = date2.split('-')
-                return `${year}${month}${day}`
-            },
-
-            yangTest() {
-                axios
-                    .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-transfer", {
-                        registration: this.registration,
-                        asset_type: this.asset_type,
-                        house_count: this.house_count,
-                        date_buy: this.date_buy,
-                        price_buy: this.price_buy,
-                        date_transfer: this.date_transfer,
-                        price_transfer: this.price_transfer,
-                        price_etc: this.price_etc
-                    })
-                    .then(res => {
-                        console.log(res);
-                        this.ycalc_result.ywhich = 'tax-transfer'
-                        this.ycalc_result.yresult = res.data
-                        console.log(this.ycalc_result)
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            },
         }
-    }
-</script>
+    </script>
 
-<style scoped="scoped">
-    .being {
-        display: flex;
-        justify-content: center;
-    }
-</style>
+    <style scoped="scoped">
+        .being {
+            display: flex;
+            justify-content: center;
+        }
+    </style>

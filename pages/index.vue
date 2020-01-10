@@ -100,7 +100,6 @@
             </v-layout>
         </v-app>
     </template>
-
     <style>
         .lining {
             height: 150px;
@@ -110,10 +109,3 @@
             background-color: white;
         }
     </style>
-
-    <!--
-            outline colorings
-            outline: rgb(210, 230, 210);
-            outline-style:outset;
-            outline-width:thin;
-    --!>
