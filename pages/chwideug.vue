@@ -240,16 +240,21 @@
                                     </v-flex>
                                 </v-layout>
                             </template>
+                            <script src="https://unpkg.com/vue/dist/vue.js"></script>
+                            <script src="https://unpkg.com/vue-cookies@1.6.1/vue-cookies.js"></script>
                             <script>
                                 import axios from "axios"
+                                import Vue from 'vue'
+                                import VueCookies from 'vue-cookies'
+                                Vue.use(VueCookies)
                                 export default {
                                     name: 'chwideug',
                                     data() {
                                         return {
                                             asset_type: 'house',
                                             kind: 'meme',
-                                            area: 'small',
-                                            farm_type: 'new',
+                                            area: '',
+                                            farm_type: '',
                                             dialog: false,
                                             dialog2: false,
                                             price: null,
@@ -288,12 +293,48 @@
                                                     }
                                                 )
                                                 .then(res => {
+                                                    var usering = {
+                                                        asset_type: this.asset_type,
+                                                        kind: this.kind,
+                                                        area: this.area,
+                                                        farm_type: this.farm_type,
+                                                        price: this.price
+                                                    }
+                                                    this.$cookies.set('usering',usering);
+                                                    // print user name
+                                                    console.log(this.$cookies.get('usering'))
+
                                                     console.log(res);
                                                     this.ccalc_result.cwhich = 'fee-registration'
                                                     this.ccalc_result.cresult = res
                                                         .data
                                                         console
                                                         .log(this.ccalc_result)
+                                                    this
+                                                        .$cookies
+                                                        .set('chwi_everything', res.data)
+                                                    this
+                                                        .$cookies
+                                                        .set('chwi_asset', this.asset_type)
+                                                    this
+                                                        .$cookies
+                                                        .set('chwi_kind', this.kind)
+                                                    this
+                                                        .$cookies
+                                                        .set('chwi_area', this.area)
+                                                    this
+                                                        .$cookies
+                                                        .set('chwi_farm', this.farm_type)
+                                                    this
+                                                        .$cookies
+                                                        .set('chwi_price', this.price)
+                                                    console.log(this.$cookies.get('chwi_everything'));
+                                                    console.log(this.$cookies.get('chwi_asset'));
+                                                    console.log(this.$cookies.get('chwi_kind'));
+                                                    console.log(this.$cookies.get('chwi_area'));
+                                                    console.log(this.$cookies.get('chwi_farm'));
+                                                    console.log(this.$cookies.get('chwi_price'));
+                                                    console.log(this.$cookies.keys());
                                                 })
                                                 .catch(err => {
                                                     console.log(err);

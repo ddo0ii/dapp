@@ -323,7 +323,8 @@
                     graduallyAdvancedDeduction: '',
                     yangdoIncomeTax: '',
                     jibangIncomeTax: '',
-                    totalPrice: ''
+                    totalPrice: '',
+                    
                 }
             },
             watch: {
@@ -371,7 +372,7 @@
                             console.log(err);
                         });
                 }
-            }
+            },
         }
     </script>
 
