@@ -150,8 +150,13 @@
         </v-flex>
     </v-layout>
 </template>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-cookies@1.6.1/vue-cookies.js"></script>
 <script>
     import axios from "axios"
+    import Vue from 'vue'
+    import VueCookies from 'vue-cookies'
+    Vue.use(VueCookies)
     export default {
         name: 'jeungyeo',
         data() {
@@ -192,12 +197,31 @@
                         price_premium: this.price_premium
                     })
                     .then(res => {
+                        var jousering = {
+                            mjws: this.mjws,
+                            asset_type: this.asset_type,
+                            price_m: this.price_m,
+                            price_wbo: this.price_wbo,
+                            price_w: this.price_w,
+                            price_current: this.price_current,
+                            price_premium: this.price_premium
+                        }
+                        this
+                            .$cookies
+                            .set('jousering', jousering);
+                        // print user name
+                        console.log(this.$cookies.get('jousering'))
+
                         console.log(res);
                         this.calc_result.which = 'fee-broker'
                         this.calc_result.result = res
                             .data
                             console
                             .log(this.calc_result)
+                        this
+                            .$cookies
+                            .set('jorusering', res.data)
+                        console.log(this.$cookies.get('jorusering'))
                     })
                     .catch(err => {
                         console.log(err);

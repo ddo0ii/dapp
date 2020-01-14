@@ -216,141 +216,156 @@
                                         <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.yangdoIncomePrice}}원</v-list-item-content>
                                     </v-list-item>
                                     <v-list-item>
-                                        <v-list-item-content>양도소득 기본공제<br>(연간 250만원 한도)</v-list-item-content>
-                                            <v-list-item-content>{{ycalc_result.yresult.yangdoBasicDeduction}}원</v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item>
-                                            <v-list-item-content style="color: #0085FF">과세표준</v-list-item-content>
-                                            <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.taxStandard}}원</v-list-item-content>
-                                        </v-list-item>
-                                    </v-list>
-                                </v-container>
-                                <v-divider></v-divider>
-                                <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
-                                    <v-list>
-                                        <v-list-item>
-                                            <v-list-item-content>세율</v-list-item-content>
-                                            <v-list-item-content>{{ycalc_result.yresult.taxRatio}}%</v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item>
-                                            <v-list-item-content style="color: #0085FF">세율 적용값</v-list-item-content>
-                                            <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.taxRatioApplied}}원</v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item>
-                                            <v-list-item-content>누진공제액</v-list-item-content>
-                                            <v-list-item-content>{{ycalc_result.yresult.graduallyAdvancedDeduction}}원</v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item>
-                                            <v-list-item-content style="color: #0085FF">양도소득세</v-list-item-content>
-                                            <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.yangdoIncomeTax}}원</v-list-item-content>
-                                        </v-list-item>
-                                    </v-list>
-                                </v-container>
-                                <v-divider></v-divider>
-                                <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
-                                    <v-list>
-                                        <v-list-item>
-                                            <v-list-item-content>지방소득세(주민세)</v-list-item-content>
-                                            <v-list-item-content>{{ycalc_result.yresult.jibangIncomeTax}}원</v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item>
-                                            <v-list-item-content style="color: #0085FF">총 비용</v-list-item-content>
-                                            <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.totalPrice}}원</v-list-item-content>
-                                        </v-list-item>
-                                    </v-list>
-                                </v-container>
-                            </v-card>
-                        </v-dialog>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-flex>
-        </v-layout>
-    </template>
-    <script>
-        import axios from "axios"
-        export default {
-            name: 'yangdo',
-            data: vm => ({
-                date: new Date()
-                    .toISOString()
-                    .substr(0, 10),
-                date_buy: vm.formatDate(new Date().toISOString().substr(0, 10)),
-                menu: false
-            }),
-            data: vm2 => ({
-                date2: new Date()
-                    .toISOString()
-                    .substr(0, 10),
-                date_transfer: vm2.formatDate2(new Date().toISOString().substr(0, 10)),
-                menu2: false
-            }),
-            data() {
-                return {
-                    text: 'text',
-                    registration: 'yes',
-                    asset_type: 'house',
-                    house_count: 'one',
-                    modal: false,
-                    menu: false,
-                    menu2: false,
-                    dialog: false,
-                    dialog2: false,
-                    hidden: false,
-                    date: '',
-                    date2: '',
-                    date_buy: '',
-                    price_buy: '',
-                    date_transfer: '',
-                    price_transfer: '',
-                    price_etc: '',
-                    ycalc_result: {
-                        ywhich: '',
-                        yresult: null
-                    },
-                    possessPeriod: '',
-                    yangdoGainsDeducted: '',
+                                        <v-list-item-content>양도소득 기본공제<br/>(연간 250만원 한도)</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.yangdoBasicDeduction}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">과세표준</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.taxStandard}}원</v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
+                            </v-container>
+                            <v-divider></v-divider>
+                            <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
+                                <v-list>
+                                    <v-list-item>
+                                        <v-list-item-content>세율</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.taxRatio}}%</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">세율 적용값</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.taxRatioApplied}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content>누진공제액</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.graduallyAdvancedDeduction}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">양도소득세</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.yangdoIncomeTax}}원</v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
+                            </v-container>
+                            <v-divider></v-divider>
+                            <v-container v-if="ycalc_result.ywhich === 'tax-transfer'">
+                                <v-list>
+                                    <v-list-item>
+                                        <v-list-item-content>지방소득세(주민세)</v-list-item-content>
+                                        <v-list-item-content>{{ycalc_result.yresult.jibangIncomeTax}}원</v-list-item-content>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content style="color: #0085FF">총 비용</v-list-item-content>
+                                        <v-list-item-content style="color: #0085FF">{{ycalc_result.yresult.totalPrice}}원</v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
+                            </v-container>
+                        </v-card>
+                    </v-dialog>
+                </v-list-item-content>
+            </v-list-item>
+        </v-flex>
+    </v-layout>
+</template>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-cookies@1.6.1/vue-cookies.js"></script>
+<script>
+    import axios from "axios"
+    import Vue from 'vue'
+    import VueCookies from 'vue-cookies'
+    Vue.use(VueCookies)
+    export default {
+        name: 'yangdo',
+        data: vm => ({
+            date: new Date()
+                .toISOString()
+                .substr(0, 10),
+            date_buy: vm.formatDate(new Date().toISOString().substr(0, 10)),
+            menu: false
+        }),
+        data: vm2 => ({
+            date2: new Date()
+                .toISOString()
+                .substr(0, 10),
+            date_transfer: vm2.formatDate2(new Date().toISOString().substr(0, 10)),
+            menu2: false
+        }),
+        data() {
+            return {
+                text: 'text',
+                registration: 'yes',
+                asset_type: '',
+                house_count: '',
+                modal: false,
+                menu: false,
+                menu2: false,
+                dialog: false,
+                dialog2: false,
+                hidden: false,
+                date: '',
+                date2: '',
+                date_buy: '',
+                price_buy: '',
+                date_transfer: '',
+                price_transfer: '',
+                price_etc: '',
+                ycalc_result: {
+                    ywhich: '',
+                    yresult: null
+                },
+                possessPeriod: '',
+                yangdoGainsDeducted: '',
 
-                    yangdoPrice: '',
-                    chuiDeukPrice: '',
-                    cost: '',
-                    yangdoGains: '',
-                    longTermDeduction: '',
-                    yangdoIncomePrice: '',
-                    yangdoBasicDeduction: '',
-                    taxStandard: '',
-                    taxRatio: '',
-                    taxRatioApplied: '',
-                    graduallyAdvancedDeduction: '',
-                    yangdoIncomeTax: '',
-                    jibangIncomeTax: '',
-                    totalPrice: '',
-                    
-                }
+                yangdoPrice: '',
+                chuiDeukPrice: '',
+                cost: '',
+                yangdoGains: '',
+                longTermDeduction: '',
+                yangdoIncomePrice: '',
+                yangdoBasicDeduction: '',
+                taxStandard: '',
+                taxRatio: '',
+                taxRatioApplied: '',
+                graduallyAdvancedDeduction: '',
+                yangdoIncomeTax: '',
+                jibangIncomeTax: '',
+                totalPrice: ''
+            }
+        },
+        watch: {
+            date(val) {
+                this.date_buy = this.formatDate(this.date)
             },
-            watch: {
-                date(val) {
-                    this.date_buy = this.formatDate(this.date)
-                },
-                date2(val) {
-                    this.date_transfer = this.formatDate(this.date2)
-                }
+            date2(val) {
+                this.date_transfer = this.formatDate(this.date2)
+            }
+        },
+        methods: {
+            formatDate(date) {
+                if (!date) 
+                    return null
+                const [year, month, day] = date.split('-')
+                return `${year}${month}${day}`
             },
-            methods: {
-                formatDate(date) {
-                    if (!date) 
-                        return null
-                    const [year, month, day] = date.split('-')
-                    return `${year}${month}${day}`
-                },
-                formatDate2(date2) {
-                    if (!date2) 
-                        return null
-                    const [year, month, day] = date2.split('-')
-                    return `${year}${month}${day}`
-                },
-                yangTest() {
-                    axios
-                        .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-transfer", {
+            formatDate2(date2) {
+                if (!date2) 
+                    return null
+                const [year, month, day] = date2.split('-')
+                return `${year}${month}${day}`
+            },
+            yangTest() {
+                axios
+                    .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-transfer", {
+                        registration: this.registration,
+                        asset_type: this.asset_type,
+                        house_count: this.house_count,
+                        date_buy: this.date_buy,
+                        price_buy: this.price_buy,
+                        date_transfer: this.date_transfer,
+                        price_transfer: this.price_transfer,
+                        price_etc: this.price_etc
+                    })
+                    .then(res => {
+                        var yusering = {
                             registration: this.registration,
                             asset_type: this.asset_type,
                             house_count: this.house_count,
@@ -359,26 +374,35 @@
                             date_transfer: this.date_transfer,
                             price_transfer: this.price_transfer,
                             price_etc: this.price_etc
-                        })
-                        .then(res => {
-                            console.log(res);
-                            this.ycalc_result.ywhich = 'tax-transfer'
-                            this.ycalc_result.yresult = res
-                                .data
-                                console
-                                .log(this.ycalc_result)
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        });
-                }
-            },
-        }
-    </script>
+                        }
+                        this
+                            .$cookies
+                            .set('yusering', yusering);
+                        // print user name
+                        console.log(this.$cookies.get('yusering'))
 
-    <style scoped="scoped">
-        .being {
-            display: flex;
-            justify-content: center;
+                        console.log(res);
+                        this.ycalc_result.ywhich = 'tax-transfer'
+                        this.ycalc_result.yresult = res
+                            .data
+                            console
+                            .log(this.ycalc_result)
+                        this
+                            .$cookies
+                            .set('yrusering', res.data)
+                        console.log(this.$cookies.get('yrusering'))
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
         }
-    </style>
+    }
+</script>
+
+<style scoped="scoped">
+    .being {
+        display: flex;
+        justify-content: center;
+    }
+</style>

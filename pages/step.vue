@@ -63,7 +63,7 @@
                             <v-list-item-content>{{this.$cookies.get('rusering').jeungji_tax}}원</v-list-item-content>
                         </v-list-item>
                         <v-list-item>
-                            <v-list-item-content>채권할인(변동큼)<br>할인률 4% 기준</v-list-item-content>
+                            <v-list-item-content>채권할인(변동큼)<br/>할인률 4% 기준</v-list-item-content>
                                 <v-list-item-content>{{this.$cookies.get('rusering').bond_discount}}원</v-list-item-content>
                             </v-list-item>
                         </v-list>

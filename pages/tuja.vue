@@ -190,8 +190,13 @@
             </v-flex>
         </v-layout>
     </template>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-cookies@1.6.1/vue-cookies.js"></script>
     <script>
         import axios from "axios"
+        import Vue from 'vue'
+        import VueCookies from 'vue-cookies'
+        Vue.use(VueCookies)
         export default {
             name: 'tuja',
             data() {
@@ -230,12 +235,29 @@
                             rate: this.rate
                         })
                         .then(res => {
+                            var tusering = {
+                                price_m: this.price_m,
+                                price_invest: this.price_invest,
+                                price_wbo: this.price_wbo,
+                                price_w: this.price_w,
+                                rate: this.rate
+                            }
+                            this
+                                .$cookies
+                                .set('tusering', tusering);
+                            // print user name
+                            console.log(this.$cookies.get('tusering'))
+
                             console.log(res);
                             this.tcalc_result.twhich = 'income'
                             this.tcalc_result.tresult = res
                                 .data
                                 console
                                 .log(this.tcalc_result)
+                            this
+                                .$cookies
+                                .set('trusering', res.data)
+                            console.log(this.$cookies.get('trusering'))
                         })
                         .catch(err => {
                             console.log(err);

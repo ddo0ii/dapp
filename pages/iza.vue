@@ -139,8 +139,13 @@
         </v-flex>
     </v-layout>
 </template>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-cookies@1.6.1/vue-cookies.js"></script>
 <script>
-    import axios from "axios"
+    import axios from "axios"    
+    import Vue from 'vue'
+    import VueCookies from 'vue-cookies'
+    Vue.use(VueCookies)
     export default {
         name: 'jeungyeo',
         data() {
@@ -175,12 +180,25 @@
                         price: this.price
                     })
                     .then(res => {
+                        var iusering = {
+                            kind: this.kind,
+                            duration: this.duration,
+                            duration_g: this.duration_g,
+                            rate: this.rate,
+                            price: this.price
+                        }
+                        this.$cookies.set('iusering', iusering);
+                        console.log(this.$cookies.get('iusering'))
+
                         console.log(res);
                         this.icalc_result.iwhich = 'interest'
                         this.icalc_result.iresult = res
                             .data
                             console
                             .log(this.icalc_result)
+                        this.$cookies.set('irusering', res.data)
+                        console.log(this.$cookies.get('irusering'))
+
                     })
                     .catch(err => {
                         console.log(err);
