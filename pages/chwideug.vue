@@ -300,7 +300,9 @@
                                                         farm_type: this.farm_type,
                                                         price: this.price
                                                     }
-                                                    this.$cookies.set('usering',usering);
+                                                    this
+                                                        .$cookies
+                                                        .set('usering', usering);
                                                     // print user name
                                                     console.log(this.$cookies.get('usering'))
 
@@ -310,31 +312,6 @@
                                                         .data
                                                         console
                                                         .log(this.ccalc_result)
-                                                    this
-                                                        .$cookies
-                                                        .set('chwi_everything', res.data)
-                                                    this
-                                                        .$cookies
-                                                        .set('chwi_asset', this.asset_type)
-                                                    this
-                                                        .$cookies
-                                                        .set('chwi_kind', this.kind)
-                                                    this
-                                                        .$cookies
-                                                        .set('chwi_area', this.area)
-                                                    this
-                                                        .$cookies
-                                                        .set('chwi_farm', this.farm_type)
-                                                    this
-                                                        .$cookies
-                                                        .set('chwi_price', this.price)
-                                                    console.log(this.$cookies.get('chwi_everything'));
-                                                    console.log(this.$cookies.get('chwi_asset'));
-                                                    console.log(this.$cookies.get('chwi_kind'));
-                                                    console.log(this.$cookies.get('chwi_area'));
-                                                    console.log(this.$cookies.get('chwi_farm'));
-                                                    console.log(this.$cookies.get('chwi_price'));
-                                                    console.log(this.$cookies.keys());
                                                 })
                                                 .catch(err => {
                                                     console.log(err);
