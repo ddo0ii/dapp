@@ -312,6 +312,8 @@
                                                         .data
                                                         console
                                                         .log(this.ccalc_result)
+                                                    this.$cookies.set('rusering', res.data)
+                                                    console.log(this.$cookies.get('rusering'))
                                                 })
                                                 .catch(err => {
                                                     console.log(err);
