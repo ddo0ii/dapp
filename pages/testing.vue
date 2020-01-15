@@ -82,6 +82,9 @@
                     </tbody>
                 </template>
             </v-simple-table>
+            <div v-if="clicking===1">
+                <Chwi/>
+            </div>
         </v-flex>
     </v-layout>
 </template>
@@ -92,10 +95,14 @@
     import Vue from 'vue'
     import VueCookies from 'vue-cookies'
     Vue.use(VueCookies)
+    import Chwi from '../components/Chwi';
     export default {
         name: 'chwideug',
         data() {
-            return {}
+            return {clicking: ''}
+        },
+        components: {
+            Chwi
         }
     }
 </script>

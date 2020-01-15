@@ -231,23 +231,33 @@
             jeungTest() {
                 axios
                     .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-gift", {
-                        giver: this.price,
+                        giver: this.giver,
                         receiver_age: this.receiver_age,
                         receiver_relation: this.receiver_relation,
                         price: this.price
                     })
                     .then(res => {
                         var jusering = {
-                            giver: this.price,
+                            giver: this.giver,
                             receiver_age: this.receiver_age,
                             receiver_relation: this.receiver_relation,
                             price: this.price
                         }
+                        var arrayConstructorDemo = [];
+                        arrayConstructorDemo.push(this.$cookies.get('jusering'));
+                        console.log(arrayConstructorDemo[0]);
+                        //console.log(arrayConstructorDemo[1]);
+
                         this
                             .$cookies
                             .set('jusering', jusering);
                         // print user name
                         console.log(this.$cookies.get('jusering'))
+
+                        var rarrayConstructorDemo = [];
+                        rarrayConstructorDemo.push(this.$cookies.get('jrusering'));
+                        console.log(rarrayConstructorDemo[0]);
+                        //console.log(rarrayConstructorDemo[1]);
 
                         console.log(res);
                         this.jcalc_result.jwhich = 'tax-gift'
@@ -259,32 +269,6 @@
                             .$cookies
                             .set('jrusering', res.data)
                         console.log(this.$cookies.get('jrusering'))
-
-                        var Usering = new Array(); //배열 선언
-                        var RUsering = new Array(); //배열 선언
-
-                        for (var i = 0; i < Usering.length; i++) { //배열 초기화
-
-                            this
-                                .$cookies
-                                .set('jusering', jusering);
-                            Usering[i] = this
-                                .$cookies
-                                .get('jusering');
-
-                            this
-                                .$cookies
-                                .set('jrusering', res.data)
-                            RUsering[i] = this
-                                .$cookies
-                                .get('jrusering')
-                        }
-                        for (var i = 0; i < Usering.length; i++) { //배열 출력
-                            console.log(Usering[i] + "<br>");
-                        }
-                        for (var i = 0; i < RUsering.length; i++) { //배열 출력
-                            console.log(RUsering[i] + "<br>");
-                        }
 
                     })
                     .catch(err => {
