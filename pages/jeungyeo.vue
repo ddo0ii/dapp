@@ -224,7 +224,8 @@
                 graduallyAdvancedDeduction: '',
                 calculatedTax: '',
                 selfAssessDeduction: '',
-                giftTax: ''
+                giftTax: '',
+                count: 0
             }
         },
         methods: {
@@ -243,21 +244,12 @@
                             receiver_relation: this.receiver_relation,
                             price: this.price
                         }
-                        var arrayConstructorDemo = [];
-                        arrayConstructorDemo.push(this.$cookies.get('jusering'));
-                        console.log(arrayConstructorDemo[0]);
-                        //console.log(arrayConstructorDemo[1]);
-
                         this
                             .$cookies
-                            .set('jusering', jusering);
+                            .set('jusering' + this.count, jusering);
+                        7
                         // print user name
-                        console.log(this.$cookies.get('jusering'))
-
-                        var rarrayConstructorDemo = [];
-                        rarrayConstructorDemo.push(this.$cookies.get('jrusering'));
-                        console.log(rarrayConstructorDemo[0]);
-                        //console.log(rarrayConstructorDemo[1]);
+                        console.log(this.$cookies.get('jusering' + this.count))
 
                         console.log(res);
                         this.jcalc_result.jwhich = 'tax-gift'
@@ -267,9 +259,9 @@
                             .log(this.jcalc_result)
                         this
                             .$cookies
-                            .set('jrusering', res.data)
-                        console.log(this.$cookies.get('jrusering'))
-
+                            .set('jrusering' + this.count, res.data)
+                        console.log(this.$cookies.get('jrusering' + this.count))
+                        this.count++;
                     })
                     .catch(err => {
                         console.log(err);
