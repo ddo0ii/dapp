@@ -286,6 +286,7 @@
                     .post(
                         "https://www.ddhouse.co.kr/api/v1/public/calculator/fee-registration",
                         {
+                            naming: "취득세",
                             asset_type: this.asset_type,
                             kind: this.kind,
                             area: this.area,
@@ -295,6 +296,7 @@
                     )
                     .then(res => {
                         var usering = {
+                            naming: "취득세",
                             asset_type: this.asset_type,
                             kind: this.kind,
                             area: this.area,
@@ -319,7 +321,7 @@
                         console.log(this.$cookies.get('rusering' + this.ccount))
                         this.ccount++;
 
-                        if(this.ccount>9){
+                        if (this.ccount > 9) {
                             this.ccount = 0;
                         }
                     })

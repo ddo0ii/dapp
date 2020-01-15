@@ -232,13 +232,15 @@
             jeungTest() {
                 axios
                     .post("https://www.ddhouse.co.kr/api/v1/public/calculator/tax-gift", {
+                        naming: "증여세",
                         giver: this.giver,
                         receiver_age: this.receiver_age,
                         receiver_relation: this.receiver_relation,
                         price: this.price
                     })
                     .then(res => {
-                        var jusering = {
+                        var usering = {
+                            naming: "증여세",
                             giver: this.giver,
                             receiver_age: this.receiver_age,
                             receiver_relation: this.receiver_relation,
@@ -246,10 +248,10 @@
                         }
                         this
                             .$cookies
-                            .set('jusering' + this.count, jusering);
+                            .set('usering' + this.count, usering);
                         7
                         // print user name
-                        console.log(this.$cookies.get('jusering' + this.count))
+                        console.log(this.$cookies.get('usering' + this.count))
 
                         console.log(res);
                         this.jcalc_result.jwhich = 'tax-gift'
@@ -259,8 +261,8 @@
                             .log(this.jcalc_result)
                         this
                             .$cookies
-                            .set('jrusering' + this.count, res.data)
-                        console.log(this.$cookies.get('jrusering' + this.count))
+                            .set('rusering' + this.count, res.data)
+                        console.log(this.$cookies.get('rusering' + this.count))
                         this.count++;
                     })
                     .catch(err => {
