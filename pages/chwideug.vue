@@ -276,7 +276,8 @@
                 dehang: '',
                 deungrocse: '',
                 ildang: '',
-                total_price: ''
+                total_price: '',
+                ccount: 0
             }
         },
         methods: {
@@ -302,9 +303,9 @@
                         }
                         this
                             .$cookies
-                            .set('usering', usering);
+                            .set('usering' + this.ccount, usering);
                         // print user name
-                        console.log(this.$cookies.get('usering'))
+                        console.log(this.$cookies.get('usering' + this.ccount))
 
                         console.log(res);
                         this.ccalc_result.cwhich = 'fee-registration'
@@ -314,8 +315,13 @@
                             .log(this.ccalc_result)
                         this
                             .$cookies
-                            .set('rusering', res.data)
-                        console.log(this.$cookies.get('rusering'))
+                            .set('rusering' + this.ccount, res.data)
+                        console.log(this.$cookies.get('rusering' + this.ccount))
+                        this.ccount++;
+
+                        if(this.ccount>9){
+                            this.ccount = 0;
+                        }
                     })
                     .catch(err => {
                         console.log(err);
