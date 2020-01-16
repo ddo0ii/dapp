@@ -249,7 +249,6 @@
                         this
                             .$cookies
                             .set('usering' + this.count, usering);
-                        7
                         // print user name
                         console.log(this.$cookies.get('usering' + this.count))
 
