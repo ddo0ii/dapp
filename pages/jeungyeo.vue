@@ -225,7 +225,10 @@
                 calculatedTax: '',
                 selfAssessDeduction: '',
                 giftTax: '',
-                count: 0
+                count: 0,
+                list: null,
+                listing: [],
+                rlisting: []
             }
         },
         methods: {
@@ -245,29 +248,52 @@
                             receiver_age: this.receiver_age,
                             receiver_relation: this.receiver_relation,
                             price: this.price
+                        };
+                        console.log("this.count는 몇이냐면" + this.count);
+                        //this.listing = $cookies.get('this.listing');
+                        if (this.listing === null) {
+                            this.listing = [];
+                        };
+                        this
+                            .listing
+                            .push(usering);
+                        for (var i = 0; i <= this.count; i++) {
+                            console.log(this.listing[i]);
+                        }
+                        console.log("쿠킹을하고");
+                        for (var i = 0; i <= this.count; i++) {
+                            $cookies.set('listing', this.listing[i]);
+                            console.log($cookies.get('listing'));
+                        }
+                        console.log(res);
+                        
+                        this.jcalc_result.jwhich = 'tax-gift'
+                        this.jcalc_result.jresult = res.data;
+                        console.log(this.jcalc_result)
+
+                        if (this.rlisting === null) {
+                            this.rlisting = [];
                         }
                         this
-                            .$cookies
-                            .set('usering' + this.count, usering);
-                        // print user name
-                        console.log(this.$cookies.get('usering' + this.count))
-
-                        console.log(res);
-                        this.jcalc_result.jwhich = 'tax-gift'
-                        this.jcalc_result.jresult = res
-                            .data
-                            console
-                            .log(this.jcalc_result)
-                        this
-                            .$cookies
-                            .set('rusering' + this.count, res.data)
-                        console.log(this.$cookies.get('rusering' + this.count))
+                            .rlisting
+                            .push(res.data);
+                        for (var i = 0; i <= this.count; i++) {
+                            console.log(this.rlisting[i]);
+                        }
+                        console.log("쿠킹을하고");
+                        for (var i = 0; i <= this.count; i++) {
+                            $cookies.set('rlisting', this.rlisting[i]);
+                            console.log($cookies.get('rlisting'));
+                        }
                         this.count++;
                     })
                     .catch(err => {
                         console.log(err);
                     });
             }
+        },
+        mounted() {
+            this.list = $cookies.get('list');
         }
     }
 </script>

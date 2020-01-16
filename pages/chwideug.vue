@@ -263,7 +263,6 @@
                     cresult: null
                 },
                 inserted_price: '',
-
                 chui_deuk_tax: '',
                 nong_eo_chon_special_tax: '',
                 jibang_education_tax: '',
@@ -277,7 +276,9 @@
                 deungrocse: '',
                 ildang: '',
                 total_price: '',
-                ccount: 0
+                count: 0,
+                listing: [],
+                rlisting: []
             }
         },
         methods: {
@@ -303,27 +304,45 @@
                             farm_type: this.farm_type,
                             price: this.price
                         }
+                        console.log("this.count는 몇이냐면" + this.count);
+                        //this.listing = $cookies.get('this.listing');
+                        if (this.listing === null) {
+                            this.listing = [];
+                        };
                         this
-                            .$cookies
-                            .set('usering' + this.ccount, usering);
-                        // print user name
-                        console.log(this.$cookies.get('usering' + this.ccount))
-
+                            .listing
+                            .push(usering);
+                        for (var i = 0; i <= this.count; i++) {
+                            console.log(this.listing[i]);
+                        }
+                        console.log("쿠킹을하고");
+                        for (var i = 0; i <= this.count; i++) {
+                            $cookies.set('listing', this.listing[i]);
+                            console.log($cookies.get('listing'));
+                        }
                         console.log(res);
+
                         this.ccalc_result.cwhich = 'fee-registration'
                         this.ccalc_result.cresult = res
                             .data
                             console
                             .log(this.ccalc_result)
-                        this
-                            .$cookies
-                            .set('rusering' + this.ccount, res.data)
-                        console.log(this.$cookies.get('rusering' + this.ccount))
-                        this.ccount++;
 
-                        if (this.ccount > 9) {
-                            this.ccount = 0;
+                        if (this.rlisting === null) {
+                            this.rlisting = [];
                         }
+                        this
+                            .rlisting
+                            .push(res.data);
+                        for (var i = 0; i <= this.count; i++) {
+                            console.log(this.rlisting[i]);
+                        }
+                        console.log("쿠킹을하고");
+                        for (var i = 0; i <= this.count; i++) {
+                            $cookies.set('rlisting', this.rlisting[i]);
+                            console.log($cookies.get('rlisting'));
+                        }
+                        this.count++;
                     })
                     .catch(err => {
                         console.log(err);
