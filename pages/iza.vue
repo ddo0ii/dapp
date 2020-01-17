@@ -166,7 +166,10 @@
                     iwhich: '',
                     iresult: null
                 },
-                list: []
+                list: [],
+                count: 0,
+                listing: [],
+                rlisting: []
             }
         },
         methods: {
