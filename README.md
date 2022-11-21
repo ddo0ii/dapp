@@ -23,5 +23,3 @@ YouTube : https://youtu.be/XYXbrhirUIw
  - 이자계산기
 2.  도로명주소 검색
  - Daum 도로명 주소 API를 입혀 도로명주소를 검색할 수 있도록 구현
-<br/><br/><br/>
-#Vue.js #Nuxt.js #Node.js #다음도로명주소API
